@@ -55,7 +55,19 @@ namespace BasketbalFantasyApp.DAL
                 .HasForeignKey(ps => ps.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // 4.Tournament - constraints/limits
+            modelBuilder.Entity<Tournament>().Property(t => t.TournamentName).IsRequired().HasMaxLength(150);
 
+            // 5. Tournament Players - Many-to-Many junction tables
+            modelBuilder.Entity<TournamentPlayer>() // one tournment with many tournmentplayers(players)
+                .HasOne(tp => tp.Tournament)
+                .WithMany(t => t.TournamentPlayers)
+                .HasForeignKey(tp => tp.TournamentId);
+
+            modelBuilder.Entity<TournamentPlayer>() // one player belongs to many tournmentplayers(tourments)
+                .HasOne(tp => tp.Player)
+                .WithMany(p => p.TournamentPlayers)
+                .HasForeignKey(tp => tp.PlayerId);
         }
     }
 }
