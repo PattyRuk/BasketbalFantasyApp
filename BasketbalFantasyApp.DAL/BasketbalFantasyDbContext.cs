@@ -33,6 +33,12 @@ namespace BasketbalFantasyApp.DAL
             modelBuilder.Entity<TournamentPlayer>()
                 .HasKey(tp => new { tp.TournamentId, tp.PlayerId });
 
+            // 1.Team - constraints/limits
+            modelBuilder.Entity<Team>().Property(t => t.TeamName).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Team>().HasIndex(t => t.OwnerUserId).IsUnique();
+
+            // 2.Player - constraints/limits
+
         }
     }
 }
