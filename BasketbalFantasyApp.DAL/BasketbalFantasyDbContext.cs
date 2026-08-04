@@ -38,6 +38,17 @@ namespace BasketbalFantasyApp.DAL
             modelBuilder.Entity<Team>().HasIndex(t => t.OwnerUserId).IsUnique();
 
             // 2.Player - constraints/limits
+            modelBuilder.Entity<Player>().Property(p => p.FirstName).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Player>().Property(p => p.LastName).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Player>().Property(p => p.Position).HasMaxLength(50);
+            modelBuilder.Entity<Player>().Property(p => p.NbaTeam).HasMaxLength(100);
+            modelBuilder.Entity<Player>() // One-to-Many: Team to Players
+                .HasOne(p => p.Team)
+                .WithMany(t => t.Players)
+                .HasForeignKey(p => p.TeamId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // 3.PlayerStat - constraints/limits
 
         }
     }
