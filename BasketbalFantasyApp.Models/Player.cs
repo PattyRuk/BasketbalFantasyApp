@@ -15,6 +15,17 @@ namespace BasketbalFantasyApp.Models
         public string? Position { get; set; }
         public string? NbaTeam { get; set; }
 
+        // One-to-One Link: Stores the unique Account ID of the user managing this player's fantasy rights
+        public string? OwnerUserId { get; set; }
 
+        // Foreign Key linking this player to their current custom fantasy league team
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
+
+        // property for daily box score statistics logs
+        public ICollection<PlayerStats> Stats { get; set; } = new List<PlayerStats>();
+
+        // property for the tracking junction
+        public List<TournamentPlayer> TournamentPlayers { get; set; } = new List<TournamentPlayer>();
     }
 }
