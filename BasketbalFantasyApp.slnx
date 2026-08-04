@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BasketbalFantasyApp.BLL/BasketbalFantasyApp.BLL.csproj" />
+  <Project Path="BasketbalFantasyApp.DAL/BasketbalFantasyApp.DAL.csproj" />
+  <Project Path="BasketbalFantasyApp.Models/BasketbalFantasyApp.Models.csproj" />
+  <Project Path="BasketbalFantasyApp/BasketbalFantasyApp.csproj" />
+</Solution>
