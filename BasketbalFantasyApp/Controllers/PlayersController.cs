@@ -58,5 +58,38 @@ namespace BasketbalFantasyApp.Controllers
             return View(newPlayer);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var playerRecord = await _database.Players.FindAsync(id);
+            if (playerRecord == null) return NotFound();
+
+            string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userTeam = await _database.Teams.FirstOrDefaultAsync(t => t.OwnerUserId == currentUserId);
+
+            if (userTeam == null || playerRecord.TeamId != userTeam.TeamId)
+            {
+                return Forbid();
+            }
+
+            return View(playerRecord);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Player modifiedPlayer)
+        {
+            if (id != modifiedPlayer.Id) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                _database.Update(modifiedPlayer);
+                await _database.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(modifiedPlayer);
+        }
+
     }
 }
