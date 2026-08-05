@@ -45,7 +45,7 @@ namespace BasketbalFantasyApp.DAL
                             LastName = element.GetProperty("last_name").GetString() ?? "",
                             Position = element.GetProperty("position").GetString() ?? "Guard",
                             NbaTeam = element.GetProperty("team").GetProperty("full_name").GetString() ?? "Free Agent",
-                            TeamId = fallbackTeamId, // Links database records to your required entity tables
+                            TeamId = fallbackTeamId, // Links database records to entity tables
                             OwnerUserId = "SYSTEM_POOL"
                         };
                         resultsList.Add(player);
