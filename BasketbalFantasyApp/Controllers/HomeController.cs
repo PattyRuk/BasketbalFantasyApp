@@ -1,32 +1,37 @@
+using BasketbalFantasyApp.DAL;
 using BasketbalFantasyApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BasketbalFantasyApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly BasketbalFantasyDbContext _database;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(BasketbalFantasyDbContext database)
         {
-            _logger = logger;
+            _database = database;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var homeMetrics = new DashboardViewModel();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            homeMetrics.TotalTeamsCount = await _database.Teams.CountAsync();
+            homeMetrics.TotalPlayersCount = await _database.Players.CountAsync();
+            homeMetrics.TotalTournamentsCount = await _database.Tournaments.CountAsync();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            homeMetrics.UpcomingTournaments = await _database.Tournaments
+                .OrderBy(tournament => tournament.EventDate)
+                .Take(5)
+                .ToListAsync();
+
+
+
+            return View(homeMetrics);
         }
     }
 }
