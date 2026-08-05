@@ -32,7 +32,28 @@ namespace BasketbalFantasyApp.Data
 
                 if (realPlayers.Any())
                 {
+                    database.Players.AddRange(realPlayers);
+                    await database.SaveChangesAsync();
 
+                    // Seed random mock statistics data lines for the downloaded players
+                    foreach (var player in database.Players.Take(5))
+                    {
+                        database.PlayerStats.Add(new PlayerStats
+                        {
+                            PlayerId = player.Id,
+                            GameDate = DateTime.Now.AddDays(-1),
+                            Points = 24,
+                            Rebounds = 8,
+                            Assists = 6,
+                            Steals = 2,
+                            Blocks = 1,
+                            Turnovers = 3,
+                            ThreePointersMade = 4,
+                            FieldGoalPercentage = 0.485,
+                            FreeThrowPercentage = 0.820
+                        });
+                    }
+                    await database.SaveChangesAsync();
                 }
             }
 
