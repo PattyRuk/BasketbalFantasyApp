@@ -57,6 +57,16 @@ namespace BasketbalFantasyApp.Data
                 }
             }
 
+            // 3.Sample upcoming tournament matchups if empty
+            if (!database.Tournaments.Any())
+            {
+                database.Tournaments.AddRange(new List<Tournament>
+                {
+                    new Tournament { TournamentName = "Summer Elite Cup", FormatType = "3x3 Half-Court", EventDate = DateTime.Now.AddDays(14) },
+                    new Tournament { TournamentName = "Pro-Am Championship", FormatType = "Full Court Elimination", EventDate = DateTime.Now.AddDays(30) }
+                });
+                await database.SaveChangesAsync();
+            }
         }
     }
 }
