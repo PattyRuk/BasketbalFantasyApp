@@ -29,7 +29,28 @@ namespace BasketbalFantasyApp.DAL
 
             try
             {
+                var response = await _httpClient.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    using var document = JsonDocument.Parse(jsonString);
+                    var dataRoot = document.RootElement.GetProperty("data");
 
+                    foreach (var element in dataRoot.EnumerateArray())
+                    {
+                        var player = new Player
+                        {
+                            Id = element.GetProperty("id").GetInt32(),
+                            FirstName = element.GetProperty("first_name").GetString() ?? "",
+                            LastName = element.GetProperty("last_name").GetString() ?? "",
+                            Position = element.GetProperty("position").GetString() ?? "Guard",
+                            NbaTeam = element.GetProperty("team").GetProperty("full_name").GetString() ?? "Free Agent",
+                            TeamId = fallbackTeamId, // Links database records to your required entity tables
+                            OwnerUserId = "SYSTEM_POOL"
+                        };
+                        resultsList.Add(player);
+                    }
+                }
             }
             catch (Exception exception)
             {
