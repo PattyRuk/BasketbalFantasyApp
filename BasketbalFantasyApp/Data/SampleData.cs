@@ -20,6 +20,21 @@ namespace BasketbalFantasyApp.Data
                 await database.SaveChangesAsync();
             }
 
+            // 2. Fetches data from the API if tables are empty
+            if (!database.Players.Any())
+            {
+                var placementTeam = database.Teams.First();
+                var apiService = new BasketballApiService();
+
+                // active API token credential 
+                string activeApiKey = "15c951ab-6eae-4f2f-b3d5-962cb5da3190";
+                var realPlayers = await apiService.FetchAndParseNbaPlayersAsync(activeApiKey, placementTeam.TeamId);
+
+                if (realPlayers.Any())
+                {
+
+                }
+            }
 
         }
     }
