@@ -29,7 +29,21 @@ namespace BasketbalFantasyApp.Controllers
                 .Take(5)
                 .ToListAsync();
 
+            if (User.Identity.IsAuthenticated)
+            {
+                string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userTeam = await _database.Teams
+                    .Include(t => t.Players)
+                    .FirstOrDefaultAsync(t => t.OwnerUserId == currentUserId);
 
+                if (userTeam != null)
+                {
+                    homeMetrics.HasTeam = true;
+                    homeMetrics.UserTeamName = userTeam.TeamName;
+                    homeMetrics.UserTeamSponsor = userTeam.SponsorName;
+                    homeMetrics.MyRosterPlayers = userTeam.Players;
+                }
+            }
 
             return View(homeMetrics);
         }
