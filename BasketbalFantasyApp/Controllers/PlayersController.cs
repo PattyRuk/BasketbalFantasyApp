@@ -91,5 +91,32 @@ namespace BasketbalFantasyApp.Controllers
             return View(modifiedPlayer);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var playerRecord = await _database.Players
+                .Include(p => p.Team)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (playerRecord == null) return NotFound();
+
+            return View(playerRecord);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var playerRecord = await _database.Players.FindAsync(id);
+            if (playerRecord != null)
+            {
+                _database.Players.Remove(playerRecord);
+                await _database.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
