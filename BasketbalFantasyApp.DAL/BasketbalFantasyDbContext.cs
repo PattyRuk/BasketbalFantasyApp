@@ -58,7 +58,7 @@ namespace BasketbalFantasyApp.DAL
             // 4.Tournament - constraints/limits
             modelBuilder.Entity<Tournament>().Property(t => t.TournamentName).IsRequired().HasMaxLength(150);
 
-            // 5. Tournament Players - Many-to-Many junction tables
+            // 5.Tournament Players - Many-to-Many junction tables
             modelBuilder.Entity<TournamentPlayer>() // one tournment with many tournmentplayers(players)
                 .HasOne(tp => tp.Tournament)
                 .WithMany(t => t.TournamentPlayers)
