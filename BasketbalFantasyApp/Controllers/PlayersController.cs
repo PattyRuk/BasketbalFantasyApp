@@ -34,5 +34,29 @@ namespace BasketbalFantasyApp.Controllers
             return View(rosterList);
         }
 
+        public async Task<IActionResult> Create()
+        {
+            string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userTeam = await _database.Teams.FirstOrDefaultAsync(t => t.OwnerUserId == currentUserId);
+
+            if (userTeam == null) return RedirectToAction("CreateTeam", "Teams");
+
+            ViewBag.TeamId = userTeam.TeamId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Player newPlayer)
+        {
+            if (ModelState.IsValid)
+            {
+                _database.Add(newPlayer);
+                await _database.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(newPlayer);
+        }
+
     }
 }
