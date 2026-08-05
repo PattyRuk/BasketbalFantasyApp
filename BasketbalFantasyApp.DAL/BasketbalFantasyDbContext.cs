@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasketbalFantasyApp.DAL
 {
-    internal class BasketbalFantasyDbContext : DbContext
+    public class BasketbalFantasyDbContext : DbContext
     {
         public BasketbalFantasyDbContext(DbContextOptions<BasketbalFantasyDbContext> options) : base(options) { }
 
