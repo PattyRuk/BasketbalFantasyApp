@@ -2,8 +2,8 @@ using BasketbalFantasyApp.DAL;
 using BasketbalFantasyApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Security.Claims;
+
 
 namespace BasketbalFantasyApp.Controllers
 {

@@ -1,4 +1,6 @@
 ﻿using BasketbalFantasyApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BasketbalFantasyApp.DAL
 {
-    public class BasketbalFantasyDbContext : DbContext
+    public class BasketbalFantasyDbContext : IdentityDbContext<IdentityUser>
     {
         public BasketbalFantasyDbContext(DbContextOptions<BasketbalFantasyDbContext> options) : base(options) { }
 

@@ -1,8 +1,157 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "League Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+}
+
+<div class="container dashboard-container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="dashboard-title">Basketball Fantasy League Dashboard</h1>
+            @if (User.Identity.IsAuthenticated && Model.HasTeam)
+            {
+                <p class="text-muted">Welcome back, Manager of the <strong>@Model.UserTeamName</strong> (@Model.UserTeamSponsor Sponsor)</p>
+            }
+            else
+            {
+                <p class="text-muted">Global operations, live match schedules, and roster management tools.</p>
+            }
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card metric-card bg-teams text-white">
+                <div class="card-body p-4">
+                    <div class="metric-number">@Model.TotalTeamsCount</div>
+                    <div class="metric-label">Registered Teams</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card metric-card bg-players text-white">
+                <div class="card-body p-4">
+                    <div class="metric-number">@Model.TotalPlayersCount</div>
+                    <div class="metric-label">Active Athletes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card metric-card bg-tournaments text-white">
+                <div class="card-body p-4">
+                    <div class="metric-number">@Model.TotalTournamentsCount</div>
+                    <div class="metric-label">Tournaments</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="panel-block">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <span>My Team Roster</span>
+                    @if (Model.HasTeam)
+                    {
+                        <a asp-controller="Players" asp-action="Create" class="btn btn-sm text-white bg-dark">Add Player</a>
+                    }
+                </div>
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="text-center empty-notice">
+                        <p class="mb-0 text-muted">Please log in to view or manage your personal team roster info.</p>
+                    </div>
+                }
+                else if (!Model.HasTeam)
+                {
+                    <div class="text-center empty-notice">
+                        <p class="mb-2 text-muted">You haven't registered a basketball franchise team yet!</p>
+                        <a asp-controller="Teams" asp-action="Create" class="btn btn-sm btn-primary">Create a Team Now</a>
+                    </div>
+                }
+                else if (Model.MyRosterPlayers == null || !Model.MyRosterPlayers.Any())
+                {
+                    <div class="text-center empty-notice">
+                        <p class="mb-0 text-muted">No players signed to your roster yet. Click "Add Player" to build your lineup.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table custom-table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>NBA Franchise</th>
+                                    <th>Position</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var player in Model.MyRosterPlayers)
+                                {
+                                    <tr>
+                                        <td><strong>@player.FirstName @player.LastName</strong></td>
+                                        <td><span class="text-muted">@player.NbaTeam</span></td>
+                                        <td><span class="badge bg-secondary">@player.Position</span></td>
+                                        <td class="text-end">
+                                            <a asp-controller="Players" asp-action="Edit" asp-route-id="@player.Id" class="btn btn-sm btn-outline-dark">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="panel-block">
+                <div class="panel-header">
+                    <span>Upcoming Tournaments</span>
+                </div>
+
+                @if (Model.UpcomingTournaments == null || !Model.UpcomingTournaments.Any())
+                {
+                    <div class="text-center empty-notice">
+                        <p class="mb-0 text-muted">There are no tournaments currently scheduled by the league manager.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Tournament / Format</th>
+                                    <th class="text-end">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tournament in Model.UpcomingTournaments)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold text-primary">@tournament.TournamentName</div>
+                                            <small class="text-muted">@tournament.FormatType</small>
+                                        </td>
+                                        <td class="text-end text-muted">
+                                            @tournament.EventDate.ToString("MMM dd, yyyy")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

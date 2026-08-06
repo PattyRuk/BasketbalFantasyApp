@@ -1,4 +1,4 @@
-html {
+/*html {
   font-size: 14px;
 }
 
@@ -19,4 +19,114 @@ html {
 
 body {
   margin-bottom: 60px;
+}*/
+
+/* ==========================================================================
+   1. GLOBAL PAGE LAYOUT
+   ========================================================================== */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333333;
+}
+
+.dashboard-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.dashboard-title {
+    font-weight: 700;
+    color: #1a252f;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   2. METRIC HIGHLIGHT CARDS (STATS GRID)
+   ========================================================================== */
+.metric-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+    .metric-card:hover {
+        transform: translateY(-4px);
+    }
+
+.bg-teams {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+.bg-players {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.bg-tournaments {
+    background: linear-gradient(135deg, #27ae60, #219653);
+}
+
+.metric-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   3. DATA LISTS AND PANEL BLOCKS
+   ========================================================================== */
+.panel-block {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.panel-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   4. TABLES AND ROSTER GRIDS
+   ========================================================================== */
+.custom-table {
+    margin-bottom: 0;
+}
+
+    .custom-table th {
+        background-color: #f8f9fa;
+        color: #7f8c8d;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        border-top: none;
+    }
+
+    .custom-table td {
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+/* ==========================================================================
+   5. ALERTS AND ALIGNED HOOKS
+   ========================================================================== */
+.empty-notice {
+    padding: 2rem;
+    background-color: #fafbfc;
+    border: 2px dashed #e2e8f0;
+    border-radius: 8px;
 }
