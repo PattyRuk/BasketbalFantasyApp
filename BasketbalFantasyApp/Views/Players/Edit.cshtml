@@ -1,0 +1,55 @@
+﻿@model BasketbalFantasyApp.Models.Player
+@{
+    ViewData["Title"] = "Modify Athlete Bio";
+}
+
+<div class="container dashboard-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="dashboard-title mb-1">Modify Player Bio</h1>
+            <p class="text-muted">Update position parameters or name matrices for this player tracking record.</p>
+
+            <div class="crud-wrapper">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="TeamId" />
+                    <input type="hidden" asp-for="OwnerUserId" />
+
+                    <div class="row">
+                        <div class="col-md-6 form-group-custom">
+                            <label asp-for="FirstName" class="form-label-custom">First Name</label>
+                            <input asp-for="FirstName" class="form-input-custom" />
+                            <span asp-validation-for="FirstName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 form-group-custom">
+                            <label asp-for="LastName" class="form-label-custom">Last Name</label>
+                            <input asp-for="LastName" class="form-input-custom" />
+                            <span asp-validation-for="LastName" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label asp-for="Position" class="form-label-custom">Court Position</label>
+                        <input asp-for="Position" class="form-input-custom" />
+                        <span asp-validation-for="Position" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label asp-for="NbaTeam" class="form-label-custom">NBA Team Affiliate</label>
+                        <input asp-for="NbaTeam" class="form-input-custom" />
+                        <span asp-validation-for="NbaTeam" class="text-danger small"></span>
+                    </div>
+
+                    <div class="button-action-grid">
+                        <button type="submit" class="btn btn-dark px-4">Commit Changes</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
