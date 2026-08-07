@@ -13,7 +13,43 @@
             <div class="crud-wrapper">
                 <form asp-action="Create" method="post">
 
-                   
+                    <!-- connects player to the localized team database key -->
+                    <input type="hidden" asp-for="TeamId" value="@ViewBag.TeamId" />
+                    <input type="hidden" asp-for="OwnerUserId" value="MANUAL_ENTRY" />
+
+                    <div class="row">
+                        <div class="col-md-6 form-group-custom">
+                            <label asp-for="FirstName" class="form-label-custom">First Name</label>
+                            <input asp-for="FirstName" class="form-input-custom" placeholder="e.g., Stephen" />
+                            <span asp-validation-for="FirstName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 form-group-custom">
+                            <label asp-for="LastName" class="form-label-custom">Last Name</label>
+                            <input asp-for="LastName" class="form-input-custom" placeholder="e.g., Curry" />
+                            <span asp-validation-for="LastName" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label asp-for="Position" class="form-label-custom">Court Position</label>
+                        <select asp-for="Position" class="form-input-custom">
+                            <option value="Guard">Point Guard (PG) / Shooting Guard (SG)</option>
+                            <option value="Forward">Small Forward (SF) / Power Forward (PF)</option>
+                            <option value="Center">Center (C)</option>
+                        </select>
+                        <span asp-validation-for="Position" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label asp-for="NbaTeam" class="form-label-custom">Real World NBA Franchise Affinity</label>
+                        <input asp-for="NbaTeam" class="form-input-custom" placeholder="e.g., Golden State Warriors" />
+                        <span asp-validation-for="NbaTeam" class="text-danger small"></span>
+                    </div>
+
+                    <div class="button-action-grid">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Save Player Profile</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel and Return</a>
+                    </div>
                 </form>
             </div>
         </div>
