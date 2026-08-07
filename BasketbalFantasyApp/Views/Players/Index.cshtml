@@ -13,5 +13,47 @@
         <a asp-action="Create" class="btn btn-dark">Add New Player</a>
     </div>
 
-
+    <div class="panel-block">
+        @if (!Model.Any())
+        {
+            <div class="text-center empty-notice">
+                <p class="mb-0 text-muted">Your active roster is completely empty. Click "Add New Player" to build your starting line-up.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table custom-table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Athlete Identity</th>
+                            <th>Assigned Position</th>
+                            <th>Real NBA Franchise</th>
+                            <th class="text-end">Roster Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var player in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="fw-bold text-dark">@player.FirstName @player.LastName</div>
+                                    <small class="text-muted">Player Tracking ID: #@player.Id</small>
+                                </td>
+                                <td><span class="badge bg-secondary">@player.Position</span></td>
+                                <td><span class="text-muted">@player.NbaTeam</span></td>
+                                <td class="text-end">
+                                    <a asp-action="Edit" asp-route-id="@player.Id" class="btn btn-sm btn-outline-dark me-1">Edit Bio</a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@player.Id" class="btn btn-sm btn-outline-danger">Drop Player</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 </div>
