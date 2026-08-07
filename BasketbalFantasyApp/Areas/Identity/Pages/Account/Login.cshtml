@@ -1,0 +1,73 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<!-- Link your central labeled stylesheet layer here -->
+<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+
+<div class="container">
+    <div class="row security-wrapper">
+        <div class="security-card">
+
+            <!-- Context Header -->
+            <div class="security-header">
+                <h2 class="security-title">League Access</h2>
+                <p class="security-subtitle">Sign in to manage your basketball franchise</p>
+            </div>
+
+            <form id="account" method="post">
+
+                <!-- Server-Side Error Alert Matrix Stack -->
+                <div asp-validation-summary="ModelOnly" class="validation-summary-custom" role="alert"></div>
+
+                <!-- Email Input Field -->
+                <div class="form-floating-custom">
+                    <label asp-for="Input.Email" class="form-label text-muted small fw-bold mb-1">Email Address</label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                </div>
+
+                <!-- Password Input Field -->
+                <div class="form-floating-custom">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label asp-for="Input.Password" class="form-label text-muted small fw-bold mb-0">Password</label>
+                    </div>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+
+                <!-- Remember Me Toggle Checkbox -->
+                <div class="checkbox mb-4">
+                    <label asp-for="Input.RememberMe" class="form-label text-muted small cursor-pointer">
+                        <input class="form-check-input me-1" asp-for="Input.RememberMe" />
+                        Remember my login session on this device
+                    </label>
+                </div>
+
+                <!-- Submit Button Trigger -->
+                <div>
+                    <button id="login-submit" type="submit" class="btn-security">Sign In to Dashboard</button>
+                </div>
+
+                <!-- Action Footer Navigation Mapping Links -->
+                <div class="security-footer">
+                    <p class="mb-1">
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p class="mb-0 text-muted">
+                        New manager? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register a Franchise</a>
+                    </p>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Activate validation scripts for instantaneous client-side checking -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

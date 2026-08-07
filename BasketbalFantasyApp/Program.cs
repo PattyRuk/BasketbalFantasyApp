@@ -54,6 +54,7 @@ namespace BasketbalFantasyApp
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             // Changed app.Run() to app.RunAsync() 
+            app.MapRazorPages();
             await app.RunAsync();
         }
     }

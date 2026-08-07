@@ -130,3 +130,110 @@ body {
     border: 2px dashed #e2e8f0;
     border-radius: 8px;
 }
+/* ==========================================================================
+   6. ACCOUNT SECURITY AND LOGIN PANELS
+   ========================================================================== */
+.security-wrapper {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.security-card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+}
+
+.security-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.security-title {
+    font-weight: 700;
+    color: #1a252f;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.security-subtitle {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+}
+
+.form-floating-custom {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+    .form-floating-custom .form-control {
+        border: 1px solid #dcdde1;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        height: auto;
+        font-size: 1rem;
+        transition: border-color 0.2s ease;
+    }
+
+        .form-floating-custom .form-control:focus {
+            border-color: #e67e22;
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+            outline: none;
+        }
+
+.btn-security {
+    background-color: #e67e22;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+    .btn-security:hover {
+        background-color: #d35400;
+        color: #ffffff;
+    }
+
+.security-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f2f6;
+    font-size: 0.9rem;
+}
+
+    .security-footer a {
+        color: #e67e22;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .security-footer a:hover {
+            text-decoration: underline;
+        }
+
+.validation-summary-custom ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.validation-summary-custom li {
+    color: #c0392b;
+    font-size: 0.9rem;
+    background-color: #fde8e7;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
