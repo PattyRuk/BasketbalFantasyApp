@@ -12,7 +12,23 @@
             <div class="crud-wrapper">
                 <form asp-action="Create" method="post">
                     
+                    <div class="form-group-custom">
+                        <label asp-for="TournamentName" class="form-label-custom">Tournament Display Title</label>
+                        <input asp-for="TournamentName" class="form-input-custom" placeholder="e.g., Winter Bracket Invitational" />
+                        <span asp-validation-for="TournamentName" class="text-danger small"></span>
+                    </div>
 
+                    <div class="form-group-custom">
+                        <label asp-for="FormatType" class="form-label-custom">Game Format Type</label>
+                        <input asp-for="FormatType" class="form-input-custom" placeholder="e.g., 5x5 Full Court  / 3x3 Half Court" />
+                        <span asp-validation-for="FormatType" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label asp-for="EventDate" class="form-label-custom">Tournament Event Date</label>
+                        <input asp-for="EventDate" type="date" class="form-input-custom" />
+                        <span asp-validation-for="EventDate" class="text-danger small"></span>
+                    </div>
 
                     <div class="button-action-grid">
                         <button type="submit" class="btn btn-success text-white px-4">Publish Tournament Bracket</button>
