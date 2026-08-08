@@ -15,6 +15,20 @@
                     <p class="mb-0 text-muted small">Deleting this player will destroy all linked statistics logged.</p>
                 </div>
 
+                <table class="table table-bordered mb-4">
+                    <tr>
+                        <th class="bg-light w-25 text-muted small fw-bold">Target Athlete Name</th>
+                        <td><strong>@Model.FirstName @Model.LastName</strong></td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light text-muted small fw-bold">Assigned Position</th>
+                        <td>@Model.Position</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light text-muted small fw-bold">Current Assigned Roster</th>
+                        <td>@Model.Team?.TeamName</td>
+                    </tr>
+                </table>
 
             </div>
         </div>
