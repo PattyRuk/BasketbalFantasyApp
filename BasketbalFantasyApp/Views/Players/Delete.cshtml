@@ -30,6 +30,13 @@
                     </tr>
                 </table>
 
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="button-action-grid">
+                        <button type="submit" class="btn btn-danger px-4">Permanently Delete Record</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel and Abort</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
