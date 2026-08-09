@@ -1,0 +1,43 @@
+﻿@model BasketbalFantasyApp.Models.Team
+@{
+    ViewData["Title"] = "Delete Franchise Confirmation";
+}
+
+<div class="container dashboard-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="dashboard-title text-danger mb-1">Drop Franchise Profile</h1>
+            <p class="text-muted">Confirm permanent deletion sequence across fantasy league system.</p>
+
+            <div class="crud-wrapper">
+                <div class="danger-display-panel">
+                    <h5 class="text-danger fw-bold mb-1">Warning: Permanent Cascade Action</h5>
+                    <p class="mb-0 text-muted small">Deleting this franchise will instantly purge all linked player roster records permanently!</p>
+                </div>
+
+                <table class="table table-bordered mb-4">
+                    <tr>
+                        <th class="bg-light w-25 text-muted small fw-bold">Franchise Title</th>
+                        <td><strong>@Model.TeamName</strong></td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light text-muted small fw-bold">Sponsor Group</th>
+                        <td>@Model.SponsorName</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light text-muted small fw-bold">Roster Count Impact</th>
+                        <td><span class="text-danger fw-bold">@(Model.Players?.Count ?? 0) players will be deleted</span></td>
+                    </tr>
+                </table>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="TeamId" />
+                    <div class="button-action-grid">
+                        <button type="submit" class="btn btn-danger px-4">Permanently Delete Team</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel and Abort</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
