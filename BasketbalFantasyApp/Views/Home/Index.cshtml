@@ -3,10 +3,6 @@
     ViewData["Title"] = "League Dashboard";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
-}
-
 <div class="container dashboard-container">
     <div class="row">
         <div class="col-12">
@@ -28,6 +24,7 @@
                 <div class="card-body p-4">
                     <div class="metric-number">@Model.TotalTeamsCount</div>
                     <div class="metric-label">Registered Teams</div>
+
                 </div>
             </div>
         </div>

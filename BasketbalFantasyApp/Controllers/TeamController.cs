@@ -16,6 +16,15 @@ namespace BasketbalFantasyApp.Controllers
         {
             _database = database;
         }
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            var leagueTeams = await _database.Teams
+                .Include(team => team.Players)
+                .ToListAsync();
+
+            return View(leagueTeams);
+        }
         public IActionResult Create()
         {
             return View();
@@ -41,6 +50,33 @@ namespace BasketbalFantasyApp.Controllers
             }
 
             return View(newTeam);
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var teamRecord = await _database.Teams
+                .Include(t => t.Players)
+                .FirstOrDefaultAsync(t => t.TeamId == id);
+
+            if (teamRecord == null) return NotFound();
+
+            return View(teamRecord);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var teamRecord = await _database.Teams.FindAsync(id);
+            if (teamRecord != null)
+            {
+                _database.Teams.Remove(teamRecord);
+                await _database.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
