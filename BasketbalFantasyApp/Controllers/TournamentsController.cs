@@ -29,5 +29,32 @@ namespace BasketbalFantasyApp.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")] // Blocks standard users and anonymous visitors
+        public IActionResult Create()
+        {
+            // default calendar date to tomorrow
+            var tomorrow = DateTime.Today.AddDays(1);
+            var defaultTournament = new Tournament { EventDate = tomorrow };
+
+            return View(defaultTournament);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Tournament newTournament)
+        {
+            if (ModelState.IsValid)
+            {
+                _database.Add(newTournament);
+                await _database.SaveChangesAsync();
+
+                // Route back to the brackets schedule upon success
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(newTournament);
+        }
+
     }
 }
