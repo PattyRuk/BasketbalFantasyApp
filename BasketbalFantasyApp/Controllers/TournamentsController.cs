@@ -56,5 +56,20 @@ namespace BasketbalFantasyApp.Controllers
             return View(newTournament);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var targetTournament = await _database.Tournaments
+                .FirstOrDefaultAsync(t => t.TournamentId == id);
+
+            if (targetTournament == null) return NotFound();
+
+            _database.Tournaments.Remove(targetTournament);
+            await _database.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
