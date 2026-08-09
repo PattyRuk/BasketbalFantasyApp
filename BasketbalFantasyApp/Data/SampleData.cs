@@ -36,7 +36,7 @@ namespace BasketbalFantasyApp.Data
                     var apiService = new BasketballApiService();
 
                     // Active BallDon'tLie token key
-                    string activeApiKey = "15c951ab-6eae-4f2f-b3d5-962cb5da3190";
+                    string activeApiKey = "2016ff56-3719-4c26-b7fe-d1facad5b1ce";
                     var realPlayers = await apiService.FetchAndParseNbaPlayersAsync(activeApiKey, placementTeam.TeamId);
 
                     if (realPlayers != null && realPlayers.Any())

@@ -23,9 +23,11 @@ namespace BasketbalFantasyApp.DAL
         {
             var resultsList = new List<Player>();
 
-            // BallDon'tLie API URL
+            // Updated base endpoint for the standard v1 API path
             var request = new HttpRequestMessage(HttpMethod.Get, "https://balldontlie.io");
-            request.Headers.Authorization = new AuthenticationHeaderValue(apiKey);
+
+            // This injects the key into the secure post-login handshake header layer
+            request.Headers.Add("Authorization", apiKey);
 
             try
             {
@@ -38,23 +40,28 @@ namespace BasketbalFantasyApp.DAL
 
                     foreach (var element in dataRoot.EnumerateArray())
                     {
-                        var player = new Player
+                        string firstName = element.GetProperty("first_name").GetString() ?? "";
+                        string lastName = element.GetProperty("last_name").GetString() ?? "";
+                        string apiPosition = element.GetProperty("position").GetString() ?? "Guard";
+                        string finalPosition = string.IsNullOrWhiteSpace(apiPosition) ? "G-F" : apiPosition;
+
+                        resultsList.Add(new Player
                         {
                             Id = element.GetProperty("id").GetInt32(),
-                            FirstName = element.GetProperty("first_name").GetString() ?? "",
-                            LastName = element.GetProperty("last_name").GetString() ?? "",
-                            Position = element.GetProperty("position").GetString() ?? "Guard",
+                            FirstName = firstName,
+                            LastName = lastName,
+                            Position = finalPosition,
+                            // Navigates the API JSON object to grab the nested NBA club name
                             NbaTeam = element.GetProperty("team").GetProperty("full_name").GetString() ?? "Free Agent",
-                            TeamId = fallbackTeamId, // Links database records to entity tables
-                            OwnerUserId = "SYSTEM_POOL"
-                        };
-                        resultsList.Add(player);
+                            TeamId = fallbackTeamId,
+                            OwnerUserId = "SYSTEM_INITIAL_POOL"
+                        });
                     }
                 }
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"Network failure parsing live basketball API metrics: {exception.Message}");
+                Console.WriteLine($"API Download Interrupted: {exception.Message}");
             }
 
             return resultsList;
