@@ -18,34 +18,44 @@
         </div>
     </div>
 
-    <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
+        
+        <!-- Teams -->
         <div class="col-md-4">
-            <div class="card metric-card bg-teams text-white">
-                <div class="card-body p-4">
-                    <div class="metric-number">@Model.TotalTeamsCount</div>
-                    <div class="metric-label">Registered Teams</div>
-
+            <a asp-controller="Teams" asp-action="Index" class="metric-link">
+                <div class="card metric-card bg-teams text-white">
+                    <div class="card-body p-4">
+                        <div class="metric-number">@Model.TotalTeamsCount</div>
+                        <div class="metric-label">Registered Teams</div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
+        <!-- Players -->
         <div class="col-md-4">
-            <div class="card metric-card bg-players text-white">
-                <div class="card-body p-4">
-                    <div class="metric-number">@Model.TotalPlayersCount</div>
-                    <div class="metric-label">Active Athletes</div>
+            <a asp-controller="Players" asp-action="Index" class="metric-link">
+                <div class="card metric-card bg-players text-white">
+                    <div class="card-body p-4">
+                        <div class="metric-number">@Model.TotalPlayersCount</div>
+                        <div class="metric-label">Active Athletes</div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
+        <!-- Tournaments -->
         <div class="col-md-4">
-            <div class="card metric-card bg-tournaments text-white">
-                <div class="card-body p-4">
-                    <div class="metric-number">@Model.TotalTournamentsCount</div>
-                    <div class="metric-label">Tournaments</div>
+            <a asp-controller="Tournaments" asp-action="Index" class="metric-link">
+                <div class="card metric-card bg-tournaments text-white">
+                    <div class="card-body p-4">
+                        <div class="metric-number">@Model.TotalTournamentsCount</div>
+                        <div class="metric-label">Tournaments</div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
+        
     </div>
 
     <div class="row g-4">
