@@ -1,4 +1,4 @@
-﻿@model DashboardViewModel
+﻿@model BasketbalFantasyApp.ViewModels.DashboardViewModel
 @{
     ViewData["Title"] = "League Dashboard";
 }
@@ -7,7 +7,8 @@
     <div class="row">
         <div class="col-12">
             <h1 class="dashboard-title">Basketball Fantasy League Dashboard</h1>
-            @if (User.Identity.IsAuthenticated && Model.HasTeam)
+            
+            @if (User.Identity != null && User.Identity.IsAuthenticated && Model.HasTeam)
             {
                 <p class="text-muted">Welcome back, Manager of the <strong>@Model.UserTeamName</strong> (@Model.UserTeamSponsor Sponsor)</p>
             }
@@ -18,9 +19,8 @@
         </div>
     </div>
 
-<div class="row g-4 mb-4">
-        
-        <!-- Teams -->
+    <div class="row g-4 mb-4">
+        <!-- Teams Metric -->
         <div class="col-md-4">
             <a asp-controller="Teams" asp-action="Index" class="metric-link">
                 <div class="card metric-card bg-teams text-white">
@@ -32,7 +32,7 @@
             </a>
         </div>
 
-        <!-- Players -->
+        <!-- Players Metric -->
         <div class="col-md-4">
             <a asp-controller="Players" asp-action="Index" class="metric-link">
                 <div class="card metric-card bg-players text-white">
@@ -44,7 +44,7 @@
             </a>
         </div>
 
-        <!-- Tournaments -->
+        <!-- Tournaments Metric -->
         <div class="col-md-4">
             <a asp-controller="Tournaments" asp-action="Index" class="metric-link">
                 <div class="card metric-card bg-tournaments text-white">
@@ -55,7 +55,6 @@
                 </div>
             </a>
         </div>
-        
     </div>
 
     <div class="row g-4">
@@ -69,7 +68,7 @@
                     }
                 </div>
 
-                @if (!User.Identity.IsAuthenticated)
+                @if (User.Identity == null || !User.Identity.IsAuthenticated)
                 {
                     <div class="text-center empty-notice">
                         <p class="mb-0 text-muted">Please log in to view or manage your personal team roster info.</p>
