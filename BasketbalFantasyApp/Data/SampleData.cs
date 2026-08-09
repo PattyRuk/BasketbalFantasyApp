@@ -1,5 +1,10 @@
-﻿using BasketbalFantasyApp.DAL;
+﻿using Microsoft.EntityFrameworkCore; 
+using BasketbalFantasyApp.DAL;
 using BasketbalFantasyApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketbalFantasyApp.Data
 {
