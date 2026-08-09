@@ -9,7 +9,30 @@
             <h1 class="dashboard-title mb-1">Register Your Franchise</h1>
             <p class="text-muted">Establish your team identity block to unlock roster controls and player draft tools.</p>
 
-           
+            <div class="crud-wrapper">
+                <form asp-action="Create" method="post">
+                    
+                    <!-- Team Name -->
+                    <div class="form-group-custom">
+                        <label asp-for="TeamName" class="form-label-custom">Franchise Display Name</label>
+                        <input asp-for="TeamName" class="form-input-custom" placeholder="e.g., Winnipeg Vipers" />
+                        <span asp-validation-for="TeamName" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Sponsors -->
+                    <div class="form-group-custom">
+                        <label asp-for="SponsorName" class="form-label-custom">Corporate Sponsor Group</label>
+                        <input asp-for="SponsorName" class="form-input-custom" placeholder="e.g., Summit Athletics Corp" />
+                        <span asp-validation-for="SponsorName" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="button-action-grid">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Register Franchise</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary px-4">Cancel</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
