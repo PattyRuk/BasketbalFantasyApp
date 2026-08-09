@@ -20,7 +20,7 @@ namespace BasketbalFantasyApp.Controllers
         public async Task<IActionResult> Index()
         {
             var leagueTeams = await _database.Teams
-                .Include(team => team.Players)
+                .Include(t => t.Players)
                 .ToListAsync();
 
             return View(leagueTeams);
