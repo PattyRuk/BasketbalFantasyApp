@@ -47,5 +47,9 @@ namespace BasketbalFantasyApp.Controllers
 
             return View(homeMetrics);
         }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }
