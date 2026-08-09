@@ -237,3 +237,8 @@ body {
     border-radius: 6px;
     margin-bottom: 0.5rem;
 }
+
+.metric-link {
+    text-decoration: none !important;
+    display: block;
+}
