@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BasketbalFantasyApp.DAL;
 using BasketbalFantasyApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BasketbalFantasyApp.Controllers
 {
