@@ -23,6 +23,14 @@ namespace BasketbalFantasyApp.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Tells Entity Framework to accept our manual primary key arrays (e.g., TeamId = 1, Player Id = 101)
+            modelBuilder.Entity<Team>()
+                .Property(t => t.TeamId)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Player>()
+                .Property(p => p.Id)
+                .ValueGeneratedNever();
             // Primary Keys
             modelBuilder.Entity<Team>()
                 .HasKey(t => t.TeamId);
