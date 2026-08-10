@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketbalFantasyApp.DAL.Migrations
 {
     [DbContext(typeof(BasketbalFantasyDbContext))]
-    [Migration("20260806165331_InitialSetup")]
-    partial class InitialSetup
+    [Migration("20260810192742_FinalSetup")]
+    partial class FinalSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,7 @@ namespace BasketbalFantasyApp.DAL.Migrations
             modelBuilder.Entity("BasketbalFantasyApp.Models.Player", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -115,10 +112,7 @@ namespace BasketbalFantasyApp.DAL.Migrations
             modelBuilder.Entity("BasketbalFantasyApp.Models.Team", b =>
                 {
                     b.Property<int>("TeamId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
                     b.Property<string>("OwnerUserId")
                         .HasColumnType("nvarchar(450)");
