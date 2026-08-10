@@ -1,54 +1,29 @@
 ﻿@model BasketbalFantasyApp.Models.Player
 @{
-    ViewData["Title"] = "Sign New Athlete";
+    ViewData["Title"] = "Draft Athlete to Roster";
 }
-
 
 <div class="container dashboard-container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 class="dashboard-title mb-1">Sign New Player</h1>
-            <p class="text-muted">Fill out the physical attributes to lock an athlete onto your roster sheet.</p>
+            <h1 class="dashboard-title mb-1">Draft a Player</h1>
+            <p class="text-muted">Select an available athlete from the global pool to sign them to your franchise squad line-up roster.</p>
 
             <div class="crud-wrapper">
                 <form asp-action="Create" method="post">
 
-                    <!-- connects player to the localized team database key -->
-                    <input type="hidden" asp-for="TeamId" value="@ViewBag.TeamId" />
-                    <input type="hidden" asp-for="OwnerUserId" value="MANUAL_ENTRY" />
+                    <div class="form-group-custom shadow-sm p-3 mb-4 bg-light rounded border">
+                        <label class="form-label-custom fs-5 mb-2 text-primary">Available Player Pool Selection</label>
 
-                    <div class="row">
-                        <div class="col-md-6 form-group-custom">
-                            <label asp-for="FirstName" class="form-label-custom">First Name</label>
-                            <input asp-for="FirstName" class="form-input-custom" placeholder="e.g., Stephen" />
-                            <span asp-validation-for="FirstName" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-6 form-group-custom">
-                            <label asp-for="LastName" class="form-label-custom">Last Name</label>
-                            <input asp-for="LastName" class="form-input-custom" placeholder="e.g., Curry" />
-                            <span asp-validation-for="LastName" class="text-danger small"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group-custom">
-                        <label asp-for="Position" class="form-label-custom">Court Position</label>
-                        <select asp-for="Position" class="form-input-custom">
-                            <option value="Guard">Point Guard (PG) / Shooting Guard (SG)</option>
-                            <option value="Forward">Small Forward (SF) / Power Forward (PF)</option>
-                            <option value="Center">Center (C)</option>
+                        <!-- Dropdown Player list options -->
+                        <select name="selectedPlayerId" asp-items="ViewBag.PlayerDropdown" class="form-input-custom fs-6 py-2">
+                            <option value="">-- Choose a Basketball Athlete to Sign --</option>
                         </select>
-                        <span asp-validation-for="Position" class="text-danger small"></span>
-                    </div>
-
-                    <div class="form-group-custom">
-                        <label asp-for="NbaTeam" class="form-label-custom">Real World NBA Franchise Affinity</label>
-                        <input asp-for="NbaTeam" class="form-input-custom" placeholder="e.g., Golden State Warriors" />
-                        <span asp-validation-for="NbaTeam" class="text-danger small"></span>
                     </div>
 
                     <div class="button-action-grid">
-                        <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Save Player Profile</button>
-                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel and Return</a>
+                        <button type="submit" class="btn btn-warning text-dark fw-bold px-4 shadow-sm">Sign Athlete to Team</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel</a>
                     </div>
                 </form>
             </div>
