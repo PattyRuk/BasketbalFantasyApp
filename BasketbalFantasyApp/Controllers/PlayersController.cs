@@ -34,9 +34,9 @@ namespace BasketbalFantasyApp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> PublicPool()
+        public async Task<IActionResult> AvailablePlayers()
         {
-            var poolViewModel = new AvailablePlayerViewModel();
+            var poolViewModel = new AvailablePlayersViewModel();
 
             // Fetch players from (the System Pool) haven't been drafted yet
             poolViewModel.AvailablePlayers = await _database.Players

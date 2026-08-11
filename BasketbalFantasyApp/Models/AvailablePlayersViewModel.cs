@@ -1,6 +1,6 @@
 ﻿namespace BasketbalFantasyApp.Models
 {
-    public class AvailablePlayerViewModel
+    public class AvailablePlayersViewModel
     {
         // Holds athletes currently unassigned to a managed team
         public List<Player> AvailablePlayers { get; set; } = new List<Player>();
