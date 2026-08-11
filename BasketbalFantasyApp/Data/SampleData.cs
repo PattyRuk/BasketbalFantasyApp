@@ -15,6 +15,8 @@ namespace BasketbalFantasyApp.Data
             // 1. Default System Team to hold unassigned players pool
             if (!await database.Teams.AnyAsync())
             {
+                // Temporarily allow explicit key inserts for the Team table(this was needed to allow formation of new teams without confilcts in team id)
+                await database.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Teams ON");
                 var systemPoolTeam = new Team
                 {
                     TeamId = 1, // Fixes the ID for lookups
@@ -25,11 +27,13 @@ namespace BasketbalFantasyApp.Data
 
                 database.Teams.Add(systemPoolTeam);
                 await database.SaveChangesAsync();
+                await database.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Teams OFF");
             }
 
             // 2. Injection for the Basketball Players
             if (!await database.Players.AnyAsync())
             {
+                await database.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Players ON");
                 var playersPoolList = new List<Player>
                 {
 
@@ -187,6 +191,7 @@ namespace BasketbalFantasyApp.Data
 
                 database.Players.AddRange(playersPoolList);
                 await database.SaveChangesAsync();
+                await database.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Players OFF");
 
                 // 3. Injection for Player Statistics
                 var sampleStatsList = new List<PlayerStats>

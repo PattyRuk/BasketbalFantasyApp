@@ -35,15 +35,6 @@ namespace BasketbalFantasyApp.DAL
             modelBuilder.Entity<TournamentPlayer>()
                 .HasKey(tp => new { tp.TournamentId, tp.PlayerId });
 
-            // Tells Entity Framework to accept our manual primary key arrays (e.g., TeamId = 1, Player Id = 101)
-            modelBuilder.Entity<Team>()
-                .Property(t => t.TeamId)
-                .ValueGeneratedNever();
-
-            modelBuilder.Entity<Player>()
-                .Property(p => p.Id)
-                .ValueGeneratedNever();
-
             // 1.Team - constraints/limits
             modelBuilder.Entity<Team>().Property(t => t.TeamName).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<Team>().HasIndex(t => t.OwnerUserId).IsUnique();
