@@ -1,0 +1,56 @@
+﻿@model BasketbalFantasyApp.Models.AvailablePlayerViewModel
+@{
+    ViewData["Title"] = "Available Player Pool";
+}
+
+<div class="container dashboard-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="dashboarlineup.</p>
+        </div>
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Index" class="btn btn-dark">My Roster</a>
+        }
+    </div>
+
+    <div class="panel-block">
+        @if (!Model.AvailablePlayers.Any())
+        {
+            <div class="text-center empty-notice">
+                <p class="mb-0 text-muted">All elite athletes have been drafted! There are no players remaining in the public pool.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table custom-table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Athlete Identity</th>
+                            <th>Assigned Position</th>
+                            <th>NBA Franchise Team</th>
+                            <th class="text-end">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var player in Model.AvailablePlayers)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@player.FirstName @player.LastName</strong>
+                                    <small class="text-muted d-block">System ID: #@player.Id</small>
+                                </td>
+                                <td><span class="badge bg-secondary">@player.Position</span></td>
+                                <td><span class="text-muted">@player.NbaTeam</span></td>
+                                <td class="text-end">
+                                    <span class="badge bg-success p-2">Available to Draft</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

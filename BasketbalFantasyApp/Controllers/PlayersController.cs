@@ -33,6 +33,21 @@ namespace BasketbalFantasyApp.Controllers
             return View(rosterList);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> PublicPool()
+        {
+            var poolViewModel = new AvailablePlayerViewModel();
+
+            // Fetch players from (the System Pool) haven't been drafted yet
+            poolViewModel.AvailablePlayers = await _database.Players
+                .Include(p => p.Stats)
+                .Where(p => p.OwnerUserId == "SYSTEM_POOL" || p.TeamId == 1)
+                .OrderBy(p => p.LastName)
+                .ToListAsync();
+
+            return View(poolViewModel);
+        }
+
         // CREATE
         public async Task<IActionResult> Create()
         {
