@@ -25,7 +25,10 @@ namespace BasketbalFantasyApp.DAL.Migrations
             modelBuilder.Entity("BasketbalFantasyApp.Models.Player", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -109,7 +112,10 @@ namespace BasketbalFantasyApp.DAL.Migrations
             modelBuilder.Entity("BasketbalFantasyApp.Models.Team", b =>
                 {
                     b.Property<int>("TeamId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
                     b.Property<string>("OwnerUserId")
                         .HasColumnType("nvarchar(450)");

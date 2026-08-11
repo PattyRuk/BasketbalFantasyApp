@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BasketbalFantasyApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class FinalSetup : Migration
+    public partial class RestoreNativeIdentityProperties : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,7 +54,8 @@ namespace BasketbalFantasyApp.DAL.Migrations
                 name: "Teams",
                 columns: table => new
                 {
-                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TeamName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SponsorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OwnerUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -189,7 +190,8 @@ namespace BasketbalFantasyApp.DAL.Migrations
                 name: "Players",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
