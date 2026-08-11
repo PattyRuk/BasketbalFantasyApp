@@ -6,11 +6,11 @@
 <div class="container dashboard-container">
     <div class="row">
         <div class="col-12">
-            <h1 class="dashboard-title">Basketball Fantasy League Dashboard</h1>
+            <h1 class="dashboard-title">The B.F.L Dashboard</h1>
             
             @if (User.Identity != null && User.Identity.IsAuthenticated && Model.HasTeam)
             {
-                <p class="text-muted">Welcome back, Manager of the <strong>@Model.UserTeamName</strong> (@Model.UserTeamSponsor Sponsor)</p>
+                <p class="text-muted">Welcome back, Manager of the <strong>@Model.UserTeamName</strong> (Sponsored by: @Model.UserTeamSponsor)</p>
             }
             else
             {
