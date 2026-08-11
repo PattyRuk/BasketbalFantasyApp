@@ -4,6 +4,7 @@
     {
         public int TotalTeamsCount { get; set; }
         public int TotalPlayersCount { get; set; }
+        public int AvailablePlayersCount { get; set; }
         public int TotalTournamentsCount { get; set; }
         public bool HasTeam { get; set; }
         public string? UserTeamName { get; set; }

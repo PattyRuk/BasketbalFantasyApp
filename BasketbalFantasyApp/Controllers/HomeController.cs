@@ -23,6 +23,9 @@ namespace BasketbalFantasyApp.Controllers
             homeMetrics.TotalTeamsCount = await _database.Teams.CountAsync();
             homeMetrics.TotalPlayersCount = await _database.Players.CountAsync();
             homeMetrics.TotalTournamentsCount = await _database.Tournaments.CountAsync();
+            homeMetrics.AvailablePlayersCount = await _database.Players
+                .Where(player => player.OwnerUserId == "SYSTEM_POOL" || player.TeamId == 1)
+                .CountAsync();
 
             homeMetrics.UpcomingTournaments = await _database.Tournaments
                 .OrderBy(tournament => tournament.EventDate)
