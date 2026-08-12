@@ -12,7 +12,7 @@ namespace BasketbalFantasyApp.Models
 
         // Foreign Key pointing back to the specific player profile
         public int PlayerId { get; set; }
-
+        public int? TournamentId { get; set; }
         public DateTime GameDate { get; set; }
 
         // Traditional Basketball Statistical Categories
@@ -27,6 +27,7 @@ namespace BasketbalFantasyApp.Models
         public double FreeThrowPercentage { get; set; }
 
         // Navigation property
-        public Player Player { get; set; }
+        public Player? Player { get; set; }
+        public Tournament? Tournament { get; set; }
     }
 }

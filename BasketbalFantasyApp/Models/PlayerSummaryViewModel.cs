@@ -18,7 +18,7 @@
 
     public class TournamentStatsRow
     {
-        public string TournamentName { get; set; } = string.Empty;
+        public string? TournamentName { get; set; }
         public int GamesPlayed { get; set; }
         public int PointsScored { get; set; }
         public double FieldGoalPercentage { get; set; }

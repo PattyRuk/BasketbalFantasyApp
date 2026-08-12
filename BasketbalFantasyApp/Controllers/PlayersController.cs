@@ -159,5 +159,45 @@ namespace BasketbalFantasyApp.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [AllowAnonymous]
+        public async Task<IActionResult> CareerSummary(int id)
+        {
+            var player = await _database.Players
+                .Include(p => p.Team)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (player == null) return NotFound();
+
+            var statsLogs = await _database.PlayerStats
+                .Include(ps => ps.Tournament)
+                .Where(ps => ps.PlayerId == id)
+                .ToListAsync();
+
+            var viewModel = new PlayerSummaryViewModel
+            {
+                PlayerBio = player,
+                DraftedTeam = player.Team ?? new Team { TeamName = "Unassigned Free Agent Pool" },
+                TotalGamesPlayed = statsLogs.Count,
+                TotalPointsScored = statsLogs.Sum(s => s.Points),
+                AveragePointsPerGame = statsLogs.Any() ? System.Math.Round(statsLogs.Average(s => s.Points), 1) : 0,
+                AverageRebounds = statsLogs.Any() ? System.Math.Round(statsLogs.Average(s => s.Rebounds), 1) : 0,
+                AverageAssists = statsLogs.Any() ? System.Math.Round(statsLogs.Average(s => s.Assists), 1) : 0
+            };
+
+            // Calculate details per separate tournament block context
+            viewModel.PerformanceHistory = statsLogs
+                .Where(s => s.TournamentId.HasValue)
+                .GroupBy(s => s.TournamentId)
+                .Select(g => new TournamentStatsRow
+                {
+                    TournamentName = g.First().Tournament?.TournamentName ?? "League Exhibition Match",
+                    GamesPlayed = g.Count(),
+                    PointsScored = g.Sum(s => s.Points),
+                    FieldGoalPercentage = System.Math.Round(g.Average(s => s.FieldGoalPercentage), 3)
+                })
+                .ToList();
+
+            return View(viewModel);
+        }
     }
 }
