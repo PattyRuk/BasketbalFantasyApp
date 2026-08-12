@@ -41,8 +41,8 @@
                                 <td>
                                     <a asp-controller="Players" asp-action="CareerSummary" asp-route-id="@player.Id" class="text-decoration-none text-dark">
                                         <strong>@player.FirstName @player.LastName</strong>
+                                        <small class="text-muted d-block">System ID: #@player.Id</small>
                                     </a>
-                                    <small class="text-muted d-block">System ID: #@player.Id</small>
                                 </td>
                                 <td><span class="badge bg-secondary">@player.Position</span></td>
                                 <td><span class="text-muted">@player.NbaTeam</span></td>
