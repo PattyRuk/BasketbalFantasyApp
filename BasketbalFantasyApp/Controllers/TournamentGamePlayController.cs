@@ -133,7 +133,7 @@ namespace BasketbalFantasyApp.Controllers
         }
         //Anyone can view individual match results 
         [AllowAnonymous]
-        public async Task<IActionResult> MatchLogs(int id)
+        public async Task<IActionResult> GameLogs(int id)
         {
             var tournament = await _database.Tournaments.FindAsync(id);
             if (tournament == null) return NotFound();

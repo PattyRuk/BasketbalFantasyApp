@@ -1,0 +1,65 @@
+﻿@model BasketbalFantasyApp.Models.TournamentGamesViewModel
+@{
+    ViewData["Title"] = "Tournament Game Logs";
+}
+
+<div class="container dashboard-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="dashboard-title mb-1">@Model.TournamentDetails.TournamentName</h1>
+            <p class="text-muted mb-0">Record logs detailing all games simulated inside this tournament.</p>
+        </div>
+        <a asp-action="Summary" asp-route-id="@Model.TournamentDetails.TournamentId" class="btn btn-outline-dark">Back to Summary</a>
+    </div>
+
+    <div class="panel-block">
+        @if (!Model.PlayedGames.Any())
+        {
+            <div class="text-center empty-notice">
+                <p class="mb-0 text-muted">No matches have been logged for this tournament.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table custom-table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-start">Home Contender</th>
+                            <th></th>
+                            <th>Final Score</th>
+                            <th></th>
+                            <th class="text-end">Away Contender</th>
+                            <th>Match Execution Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var game in Model.PlayedGames)
+                        {
+                            <tr>
+                                <td class="text-start">
+                                    <span class="fw-bold @(game.WinnerTeamId == game.TeamAId ? "text-success" : "text-dark")">
+                                        @game.TeamA?.TeamName
+                                    </span>
+                                </td>
+                                <td><span class="badge bg-light text-muted border">VS</span></td>
+                                <td>
+                                    <span class="fs-5 fw-bold text-primary">@game.TeamAScore</span>
+                                    <span class="text-muted mx-1">-</span>
+                                    <span class="fs-5 fw-bold text-primary">@game.TeamBScore</span>
+                                </td>
+                                <td><span class="badge bg-light text-muted border">VS</span></td>
+                                <td class="text-end">
+                                    <span class="fw-bold @(game.WinnerTeamId == game.TeamBId ? "text-success" : "text-dark")">
+                                        @game.TeamB?.TeamName
+                                    </span>
+                                </td>
+                                <td class="text-muted small">@game.MatchTimestamp.ToString("hh:mm tt (MMM dd)")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
