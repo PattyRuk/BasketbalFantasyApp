@@ -9,6 +9,7 @@ using BasketbalFantasyApp.Models;
 
 namespace BasketbalFantasyApp.Controllers
 {
+    [Authorize]
     public class TournamentsController : Controller
     {
         private readonly BasketbalFantasyDbContext _database;
@@ -18,24 +19,24 @@ namespace BasketbalFantasyApp.Controllers
             _database = database;
         }
 
-        [AllowAnonymous] // Anyone can view this list
+        // READ
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var scheduledBrackets = await _database.Tournaments
-                .OrderBy(tournament => tournament.EventDate)
+            var brackets = await _database.Tournaments
+                .Include(t => t.TournamentTeams).ThenInclude(tt => tt.Team)
+                .Include(t => t.WinnerTeam)
+                .OrderByDescending(t => t.EventDate)
                 .ToListAsync();
 
-            return View(scheduledBrackets);
+            return View(brackets);
         }
 
-
-        [Authorize(Roles = "Admin")] // Blocks standard users and anonymous visitors
-        public IActionResult Create()
+        // CREATE
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()  
         {
-            // default calendar date to tomorrow
-            var tomorrow = DateTime.Today.AddDays(1);
-            var defaultTournament = new Tournament { EventDate = tomorrow };
-
+            var defaultTournament = new Tournament { EventDate = DateTime.Today.AddDays(1) };
             return View(defaultTournament);
         }
 
@@ -48,26 +49,24 @@ namespace BasketbalFantasyApp.Controllers
             {
                 _database.Add(newTournament);
                 await _database.SaveChangesAsync();
-
-                // Route back to the brackets schedule upon success
                 return RedirectToAction(nameof(Index));
             }
 
             return View(newTournament);
         }
 
+        // DELETE
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
 
-            var targetTournament = await _database.Tournaments
-                .FirstOrDefaultAsync(t => t.TournamentId == id);
-
-            if (targetTournament == null) return NotFound();
-
-            _database.Tournaments.Remove(targetTournament);
-            await _database.SaveChangesAsync();
+            var targetTournament = await _database.Tournaments.FindAsync(id);
+            if (targetTournament != null)
+            {
+                _database.Tournaments.Remove(targetTournament);
+                await _database.SaveChangesAsync();
+            }
 
             return RedirectToAction(nameof(Index));
         }
