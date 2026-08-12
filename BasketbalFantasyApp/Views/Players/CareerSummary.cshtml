@@ -24,5 +24,43 @@
         <div class="col-md-3"><div class="card metric-card bg-dark text-warning"><div class="card-body p-4"><div class="metric-number">@Model.AverageAssists</div><div class="metric-label">Assists APG</div></div></div></div>
     </div>
 
-   
+    <!-- Tournament Breakdown -->
+    <div class="panel-block">
+        <div class="panel-header"><span>Tournament Participation Analytics</span></div>
+        @if (!Model.PerformanceHistory.Any())
+        {
+            <div class="text-center empty-notice">
+                <p class="mb-0 text-muted">This athlete has not logged any official stats inside a simulated league tournament.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table custom-table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tournament Bracket Title</th>
+                            <th class="text-center">Games Simulated</th>
+                            <th class="text-center">Total Points Contributed</th>
+                            <th class="text-center">Shooting Efficiency (FG%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var historicalBracket in Model.PerformanceHistory)
+                        {
+                            <tr>
+                                <td><strong class="text-primary">@historicalBracket.TournamentName</strong></td>
+                                <td class="text-center fw-bold">@historicalBracket.GamesPlayed</td>
+                                <td class="text-center text-success">@historicalBracket.PointsScored pts</td>
+                                <td class="text-center text-muted">@(historicalBracket.FieldGoalPercentage * 100)%</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        <div class="text-center mt-4 pt-3 border-top">
+            <a asp-action="AvailablePlayers" class="btn btn-outline-dark px-4">Return to Free Agent Pool</a>
+        </div>
+    </div>
 </div>
