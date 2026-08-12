@@ -7,59 +7,116 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="dashboard-title mb-1">@Model.TournamentDetails.TournamentName</h1>
-            <p class="text-muted mb-0">Record logs detailing all games simulated inside this tournament.</p>
+            <p class="text-muted mb-0">Official historical record logs detailing all games and individual athlete statistics.</p>
         </div>
         <a asp-action="Summary" asp-route-id="@Model.TournamentDetails.TournamentId" class="btn btn-outline-dark">Back to Summary</a>
     </div>
 
-    <div class="panel-block">
-        @if (!Model.PlayedGames.Any())
+    @if (!Model.PlayedGames.Any())
+    {
+        <div class="panel-block text-center empty-notice">
+            <p class="mb-0 text-muted">No games have been played and logged for this tournament.</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var game in Model.PlayedGames)
         {
-            <div class="text-center empty-notice">
-                <p class="mb-0 text-muted">No matches have been logged for this tournament.</p>
+            <div class="panel-block mb-4 p-4 border border-light shadow-sm">
+
+                <!-- Scoreboard -->
+                <div class="row align-items-center text-center py-2 bg-light rounded border mb-4">
+                    <div class="col-4 text-start ps-4">
+                        <span class="fs-5 fw-bold @(game.WinnerTeamId == game.TeamAId ? "text-success" : "text-dark")">
+                            @game.TeamA?.TeamName @(game.WinnerTeamId == game.TeamAId ? "🏆" : "")
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="display-6 fw-bold text-primary">@game.TeamAScore</span>
+                        <span class="text-muted mx-3 fs-3">-</span>
+                        <span class="display-6 fw-bold text-primary">@game.TeamBScore</span>
+                        <small class="text-muted d-block mt-1">@game.MatchTimestamp.ToString("hh:mm tt (MMM dd)")</small>
+                    </div>
+                    <div class="col-4 text-end pe-4">
+                        <span class="fs-5 fw-bold @(game.WinnerTeamId == game.TeamBId ? "text-success" : "text-dark")">
+                            @(game.WinnerTeamId == game.TeamBId ? "🏆 " : "")@game.TeamB?.TeamName
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 2. Individual Athlete Performance Layout -->
+                <div class="row g-4">
+
+                    <!-- Team A Box Scores -->
+                    <div class="col-md-6 border-end">
+                        <h5 class="text-dark fw-bold mb-2 pb-2 border-bottom">@game.TeamA?.TeamName Box Scores</h5>
+                        <div class="table-responsive">
+                            <table class="table custom-table table-hover sm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th class="text-center">PTS</th>
+                                        <th class="text-center">REB</th>
+                                        <th class="text-center">AST</th>
+                                        <th class="text-center">EFF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @* Filters stats to show only players drafted to Team A who logged points on this exact date timestamp *@
+                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamAId && s.GameDate.Date == game.MatchTimestamp.Date))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-bold text-dark">@stat.Player?.FirstName @stat.Player?.LastName</div>
+                                                <small class="text-muted fs-7">@stat.Player?.NbaTeam</small>
+                                            </td>
+                                            <td class="text-center fw-bold text-primary">@stat.Points</td>
+                                            <td class="text-center text-muted">@stat.Rebounds</td>
+                                            <td class="text-center text-muted">@stat.Assists</td>
+                                            <td class="text-center text-muted small">@(stat.FieldGoalPercentage * 100)%</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Team B Box Scores -->
+                    <div class="col-md-6">
+                        <h5 class="text-dark fw-bold mb-2 pb-2 border-bottom text-end">@game.TeamB?.TeamName Box Scores</h5>
+                        <div class="table-responsive">
+                            <table class="table custom-table table-hover sm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th class="text-center">PTS</th>
+                                        <th class="text-center">REB</th>
+                                        <th class="text-center">AST</th>
+                                        <th class="text-center">EFF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @* Filters stats to show only players drafted to Team B who logged points on this exact date timestamp/tournament *@
+                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamBId && s.GameDate.Date == game.MatchTimestamp.Date))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-bold text-dark">@stat.Player?.FirstName @stat.Player?.LastName</div>
+                                                <small class="text-muted fs-7">@stat.Player?.NbaTeam</small>
+                                            </td>
+                                            <td class="text-center fw-bold text-primary">@stat.Points</td>
+                                            <td class="text-center text-muted">@stat.Rebounds</td>
+                                            <td class="text-center text-muted">@stat.Assists</td>
+                                            <td class="text-center text-muted small">@(stat.FieldGoalPercentage * 100)%</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         }
-        else
-        {
-            <div class="table-responsive">
-                <table class="table custom-table table-hover text-center">
-                    <thead>
-                        <tr>
-                            <th class="text-start">Home Contender</th>
-                            <th></th>
-                            <th>Final Score</th>
-                            <th></th>
-                            <th class="text-end">Away Contender</th>
-                            <th>Match Execution Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var game in Model.PlayedGames)
-                        {
-                            <tr>
-                                <td class="text-start">
-                                    <span class="fw-bold @(game.WinnerTeamId == game.TeamAId ? "text-success" : "text-dark")">
-                                        @game.TeamA?.TeamName
-                                    </span>
-                                </td>
-                                <td><span class="badge bg-light text-muted border">VS</span></td>
-                                <td>
-                                    <span class="fs-5 fw-bold text-primary">@game.TeamAScore</span>
-                                    <span class="text-muted mx-1">-</span>
-                                    <span class="fs-5 fw-bold text-primary">@game.TeamBScore</span>
-                                </td>
-                                <td><span class="badge bg-light text-muted border">VS</span></td>
-                                <td class="text-end">
-                                    <span class="fw-bold @(game.WinnerTeamId == game.TeamBId ? "text-success" : "text-dark")">
-                                        @game.TeamB?.TeamName
-                                    </span>
-                                </td>
-                                <td class="text-muted small">@game.MatchTimestamp.ToString("hh:mm tt (MMM dd)")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-    </div>
+    }
 </div>
