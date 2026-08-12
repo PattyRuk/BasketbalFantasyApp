@@ -20,8 +20,39 @@
                             <p class="mb-0 text-muted small">You currently have @Model.EligibleRoster.Count signed athletes. Go the Dashboard and sign more players before entering this tournament.</p>
                         </div>
                     }
+                    else
+                    {
+                        <div class="table-responsive mb-4">
+                            <table class="table custom-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Select</th>
+                                        <th>Athlete</th>
+                                        <th>Position</th>
+                                        <th>NBA Club</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var player in Model.EligibleRoster)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="selectedPlayerIds" value="@player.Id" class="form-check-input" />
+                                            </td>
+                                            <td><strong>@player.FirstName @player.LastName</strong></td>
+                                            <td><span class="badge bg-secondary">@player.Position</span></td>
+                                            <td><span class="text-muted">@player.NbaTeam</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-                    
+                        <div class="button-action-grid">
+                            <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Finalize Registration</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel</a>
+                        </div>
+                    }
                 </form>
             </div>
         </div>
