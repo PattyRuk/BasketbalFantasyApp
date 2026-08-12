@@ -10,7 +10,7 @@
             <p class="text-muted">Select exactly <strong>@Model.RequiredPlayersCount</strong> players from your roster to complete team registration for the <strong>@Model.FormatType</strong> bracket ruleset.</p>
 
             <div class="crud-wrapper">
-                <form asp-action="RegisterTeam" method="post">
+                <form asp-controller="TournamentGameplay" asp-action="RegisterTeam" method="post">
                     <input type="hidden" name="tournamentId" value="@Model.TournamentId" />
                     
                     @if (Model.EligibleRoster.Count < Model.RequiredPlayersCount)
