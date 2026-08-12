@@ -245,7 +245,7 @@ body {
 }
 
 /* ==========================================================================
-   7. FORM MANAGERS AND CRUD CONTROL GRIDS (ADD THIS SEGMENT TO MATCH)
+   7. FORM MANAGERS AND CRUD CONTROL GRIDS
    ========================================================================== */
 .crud-wrapper {
     background-color: #ffffff;
@@ -295,4 +295,38 @@ body {
     padding: 1rem;
     border-radius: 4px;
     margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   8. TOURNAMENT SIMULATION ENGINE AND PRESENTATION RETROSPECTIVES
+   ========================================================================== */
+.letter-spacing-1 {
+    letter-spacing: 1.5px;
+}
+
+.tracking-wide {
+    letter-spacing: 2px;
+}
+
+.bg-warning.text-dark {
+    background: linear-gradient(135deg, #f1c40f, #f39c12) !important;
+    border: none !important;
+}
+
+.panel-block.bg-dark {
+    background: linear-gradient(135deg, #1e272e, #2d3436) !important;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.border-secondary {
+    border-color: #485460 !important;
+}
+
+.bg-secondary.bg-opacity-25 {
+    background-color: rgba(72, 84, 96, 0.25) !important;
+}
+
+.uppercase {
+    text-transform: uppercase;
 }
