@@ -9,7 +9,21 @@
             <h1 class="dashboard-title mb-1">Tournament Squad Entry</h1>
             <p class="text-muted">Select exactly <strong>@Model.RequiredPlayersCount</strong> players from your roster to complete team registration for the <strong>@Model.FormatType</strong> bracket ruleset.</p>
 
-           
+            <div class="crud-wrapper">
+                <form asp-action="RegisterTeam" method="post">
+                    <input type="hidden" name="tournamentId" value="@Model.TournamentId" />
+                    
+                    @if (Model.EligibleRoster.Count < Model.RequiredPlayersCount)
+                    {
+                        <div class="danger-display-panel mb-0">
+                            <h5 class="text-danger fw-bold mb-1">Roster Requirements Unfulfilled</h5>
+                            <p class="mb-0 text-muted small">You currently have @Model.EligibleRoster.Count signed athletes. Go the Dashboard and sign more players before entering this tournament.</p>
+                        </div>
+                    }
+
+                    
+                </form>
+            </div>
         </div>
     </div>
 </div>
