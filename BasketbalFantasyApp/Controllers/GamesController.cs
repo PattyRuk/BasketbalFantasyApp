@@ -99,6 +99,24 @@ namespace BasketbalFantasyApp.Controllers
                 await _database.SaveChangesAsync();
             }
 
+            // Calculate MVP by tracking the athlete with the highest points sum
+            if (tournament.IsCompleted)
+            {
+                var registeredPlayerIds = tournament.TournamentTeams.SelectMany(tt => tt.RegisteredPlayers.Select(p => p.Id)).ToList();
+
+                var mvpCandidate = await _database.PlayerStats
+                    .Where(ps => registeredPlayerIds.Contains(ps.PlayerId) && ps.GameDate >= tournament.EventDate)
+                    .GroupBy(ps => ps.PlayerId)
+                    .Select(g => new { PlayerId = g.Key, TotalPoints = g.Sum(ps => ps.Points) })
+                    .OrderByDescending(x => x.TotalPoints)
+                    .FirstOrDefaultAsync();
+
+                if (mvpCandidate != null)
+                {
+                    tournament.MvpPlayerId = mvpCandidate.PlayerId;
+                    await _database.SaveChangesAsync();
+                }
+            }
 
             return RedirectToAction("Summary", "TournamentGameplay", new { id = tournament.TournamentId });
         }
