@@ -42,14 +42,14 @@ namespace BasketbalFantasyApp.Data
                     }
                 }
             }
-        
+
             // 2. Injection for the Basketball Players
             if (!await database.Players.AnyAsync())
             {
                 using (var transaction = await database.Database.BeginTransactionAsync())
-                { 
+                {
                     try
-                    { 
+                    {
                         await database.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Players ON");
                         var playersPoolList = new List<Player>
                         {
@@ -217,65 +217,8 @@ namespace BasketbalFantasyApp.Data
                         throw;
                     }
                 }
-
-                // 3. Injection for Player Statistics
-                var sampleStatsList = new List<PlayerStats>
-                {
-                    new PlayerStats { PlayerId = 101, GameDate = DateTime.Now.AddDays(-1), Points = 27, Rebounds = 8, Assists = 5, Steals = 1, Blocks = 1, Turnovers = 2, ThreePointersMade = 3, FieldGoalPercentage = 0.470, FreeThrowPercentage = 0.830 },
-                    
-                    new PlayerStats { PlayerId = 102, GameDate = DateTime.Now.AddDays(-1), Points = 23, Rebounds = 6, Assists = 4, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.500, FreeThrowPercentage = 0.760 },
-                    
-                    new PlayerStats { PlayerId = 104, GameDate = DateTime.Now.AddDays(-1), Points = 29, Rebounds = 4, Assists = 7, Steals = 1, Blocks = 0, Turnovers = 2, ThreePointersMade = 3, FieldGoalPercentage = 0.480, FreeThrowPercentage = 0.850 },
-                    
-                    new PlayerStats { PlayerId = 105, GameDate = DateTime.Now.AddDays(-1), Points = 22, Rebounds = 11, Assists = 3, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.520, FreeThrowPercentage = 0.840 },
-                    
-                    new PlayerStats { PlayerId = 107, GameDate = DateTime.Now.AddDays(-1), Points = 33, Rebounds = 10, Assists = 4, Steals = 1, Blocks = 2, Turnovers = 4, ThreePointersMade = 1, FieldGoalPercentage = 0.530, FreeThrowPercentage = 0.880 },
-                    
-                    new PlayerStats { PlayerId = 108, GameDate = DateTime.Now.AddDays(-2), Points = 26, Rebounds = 4, Assists = 6, Steals = 1, Blocks = 0, Turnovers = 2, ThreePointersMade = 3, FieldGoalPercentage = 0.450, FreeThrowPercentage = 0.870 },
-                    
-                    new PlayerStats { PlayerId = 110, GameDate = DateTime.Now.AddDays(-2), Points = 27, Rebounds = 5, Assists = 6, Steals = 2, Blocks = 1, Turnovers = 3, ThreePointersMade = 3, FieldGoalPercentage = 0.460, FreeThrowPercentage = 0.860 },
-                    
-                    new PlayerStats { PlayerId = 113, GameDate = DateTime.Now.AddDays(-1), Points = 30, Rebounds = 11, Assists = 6, Steals = 1, Blocks = 1, Turnovers = 4, ThreePointersMade = 0, FieldGoalPercentage = 0.610, FreeThrowPercentage = 0.660 },
-                    
-                    new PlayerStats { PlayerId = 114, GameDate = DateTime.Now.AddDays(-1), Points = 24, Rebounds = 4, Assists = 7, Steals = 1, Blocks = 0, Turnovers = 3, ThreePointersMade = 3, FieldGoalPercentage = 0.425, FreeThrowPercentage = 0.920 },
-                    
-                    new PlayerStats { PlayerId = 116, GameDate = DateTime.Now.AddDays(-3), Points = 20, Rebounds = 4, Assists = 11, Steals = 1, Blocks = 1, Turnovers = 2, ThreePointersMade = 3, FieldGoalPercentage = 0.480, FreeThrowPercentage = 0.855 },
-                    
-                    new PlayerStats { PlayerId = 146, GameDate = DateTime.Now.AddDays(-1), Points = 30, Rebounds = 6, Assists = 6, Steals = 2, Blocks = 1, Turnovers = 2, ThreePointersMade = 1, FieldGoalPercentage = 0.540, FreeThrowPercentage = 0.870 },
-                    
-                    new PlayerStats { PlayerId = 149, GameDate = DateTime.Now.AddDays(-1), Points = 26, Rebounds = 12, Assists = 9, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 1, FieldGoalPercentage = 0.580, FreeThrowPercentage = 0.820 },
-                    
-                    new PlayerStats { PlayerId = 152, GameDate = DateTime.Now.AddDays(-2), Points = 26, Rebounds = 5, Assists = 5, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 3, FieldGoalPercentage = 0.460, FreeThrowPercentage = 0.840 },
-                    
-                    new PlayerStats { PlayerId = 158, GameDate = DateTime.Now.AddDays(-1), Points = 34, Rebounds = 9, Assists = 10, Steals = 1, Blocks = 0, Turnovers = 4, ThreePointersMade = 4, FieldGoalPercentage = 0.490, FreeThrowPercentage = 0.780 },
-                    
-                    new PlayerStats { PlayerId = 161, GameDate = DateTime.Now.AddDays(-1), Points = 27, Rebounds = 7, Assists = 5, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.530, FreeThrowPercentage = 0.890 },
-                    
-                    new PlayerStats { PlayerId = 162, GameDate = DateTime.Now.AddDays(-1), Points = 27, Rebounds = 5, Assists = 7, Steals = 1, Blocks = 0, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.490, FreeThrowPercentage = 0.880 },
-                    
-                    new PlayerStats { PlayerId = 167, GameDate = DateTime.Now.AddDays(-1), Points = 25, Rebounds = 7, Assists = 8, Steals = 1, Blocks = 1, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.540, FreeThrowPercentage = 0.770 },
-                    
-                    new PlayerStats { PlayerId = 168, GameDate = DateTime.Now.AddDays(-1), Points = 25, Rebounds = 12, Assists = 4, Steals = 1, Blocks = 2, Turnovers = 2, ThreePointersMade = 0, FieldGoalPercentage = 0.560, FreeThrowPercentage = 0.815 },
-                    
-                    new PlayerStats { PlayerId = 173, GameDate = DateTime.Now.AddDays(-1), Points = 26, Rebounds = 4, Assists = 5, Steals = 1, Blocks = 0, Turnovers = 3, ThreePointersMade = 5, FieldGoalPercentage = 0.450, FreeThrowPercentage = 0.910 },
-                    
-                    new PlayerStats { PlayerId = 185, GameDate = DateTime.Now.AddDays(-2), Points = 21, Rebounds = 11, Assists = 4, Steals = 1, Blocks = 4, Turnovers = 3, ThreePointersMade = 2, FieldGoalPercentage = 0.465, FreeThrowPercentage = 0.800 }
-                };
-
-                database.PlayerStats.AddRange(sampleStatsList);
-                await database.SaveChangesAsync();
             }
 
-            // 4. Seed tournament events matching layout requirements
-            if (!await database.Tournaments.AnyAsync())
-            {
-                database.Tournaments.AddRange(new List<Tournament>
-                {
-                    new Tournament { TournamentName = "Summer Elite Cup", FormatType = "3x3 Half-Court", EventDate = DateTime.Now.AddDays(14) },
-                    new Tournament { TournamentName = "Pro-Am Championship", FormatType = "5x5 Full Court", EventDate = DateTime.Now.AddDays(30) }
-                });
-                await database.SaveChangesAsync();
-            }
         }
     }
 }
