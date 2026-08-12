@@ -19,6 +19,8 @@ namespace BasketbalFantasyApp.DAL
         public DbSet<Team> Teams { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TournamentPlayer> TournamentPlayers { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<TournamentTeam> TournamentTeams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +36,10 @@ namespace BasketbalFantasyApp.DAL
                 .HasKey(t => t.TournamentId);
             modelBuilder.Entity<TournamentPlayer>()
                 .HasKey(tp => new { tp.TournamentId, tp.PlayerId });
+            modelBuilder.Entity<Game>()
+                .HasKey(g => g.GameId);
+            modelBuilder.Entity<TournamentTeam>()
+                .HasKey(tt => new { tt.TournamentId, tt.TeamId });
 
             // 1.Team - constraints/limits
             modelBuilder.Entity<Team>().Property(t => t.TeamName).IsRequired().HasMaxLength(100);
@@ -70,6 +76,24 @@ namespace BasketbalFantasyApp.DAL
                 .HasOne(tp => tp.Player)
                 .WithMany(p => p.TournamentPlayers)
                 .HasForeignKey(tp => tp.PlayerId);
+            // 6. Game - Many-to-many connections
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.Tournament)
+                .WithMany(t => t.Games)
+                .HasForeignKey(g => g.TournamentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.TeamA)
+                .WithMany()
+                .HasForeignKey(g => g.TeamAId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.TeamB)
+                .WithMany()
+                .HasForeignKey(g => g.TeamBId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
