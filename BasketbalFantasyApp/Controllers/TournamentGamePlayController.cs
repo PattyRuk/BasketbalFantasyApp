@@ -131,5 +131,27 @@ namespace BasketbalFantasyApp.Controllers
 
             return View(summaryModel);
         }
+        //Anyone can view individual match results 
+        [AllowAnonymous]
+        public async Task<IActionResult> MatchLogs(int id)
+        {
+            var tournament = await _database.Tournaments.FindAsync(id);
+            if (tournament == null) return NotFound();
+
+            var gamesList = await _database.Games
+                .Include(g => g.TeamA)
+                .Include(g => g.TeamB)
+                .Where(g => g.TournamentId == id)
+                .OrderByDescending(g => g.MatchTimestamp)
+                .ToListAsync();
+
+            var viewModel = new TournamentGamesViewModel
+            {
+                TournamentDetails = tournament,
+                PlayedGames = gamesList
+            };
+
+            return View(viewModel);
+        }
     }
 }
