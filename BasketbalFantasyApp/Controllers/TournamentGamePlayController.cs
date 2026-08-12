@@ -145,10 +145,17 @@ namespace BasketbalFantasyApp.Controllers
                 .OrderByDescending(g => g.MatchTimestamp)
                 .ToListAsync();
 
+            // STATS TIED TO THIS TOURNAMENT
+            var playerStatsList = await _database.PlayerStats
+                .Include(ps => ps.Player).ThenInclude(p => p.Team)
+                .Where(ps => ps.TournamentId == id)
+                .ToListAsync();
+
             var viewModel = new TournamentGamesViewModel
             {
                 TournamentDetails = tournament,
-                PlayedGames = gamesList
+                PlayedGames = gamesList,
+                TournamentPlayerBoxScores = playerStatsList
             };
 
             return View(viewModel);
