@@ -23,5 +23,37 @@
         </div>
     </div>
 
-   
+    <div class="row g-4 mb-4">
+        <!-- Roster Profiles of Winners -->
+        <div class="col-lg-6">
+            <div class="panel-block">
+                <div class="panel-header"><span>Championship Winning Lineup</span></div>
+                <div class="table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th>Athlete</th>
+                                <th>Position</th>
+                                <th>NBA Team</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var player in Model.WinnerRoster)
+                            {
+                                <tr>
+                                    <td><strong>@player.FirstName @player.LastName</strong></td>
+                                    <td><span class="badge bg-dark">@player.Position</span></td>
+                                    <td><span class="text-muted">@player.NbaTeam</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    
 </div>
