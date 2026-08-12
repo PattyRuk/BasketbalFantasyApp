@@ -52,8 +52,29 @@
             </div>
         </div>
 
-
+        <!-- Tournament MVP Section -->
+        <div class="col-lg-6">
+            <div class="panel-block bg-dark text-white p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="border-bottom border-secondary pb-2 mb-3">
+                        <span class="text-warning text-uppercase small fw-bold tracking-wide">Tournament MVP Award</span>
+                    </div>
+                    <h2 class="text-warning fw-bold mb-1">@Model.TournamentMvp.FirstName @Model.TournamentMvp.LastName</h2>
+                    <p class="text-muted small mb-3">Representing: @Model.TournamentMvp.NbaTeam</p>
+                </div>
+                <div class="row bg-secondary bg-opacity-25 rounded p-3 text-center g-2">
+                    <div class="col-6">
+                        <div class="text-warning fs-3 fw-bold">@Model.MvpTotalPoints</div>
+                        <small class="text-muted uppercase small">Total Points Scored</small>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-warning fs-3 fw-bold">@Model.MvpAveragePoints</div>
+                        <small class="text-muted uppercase small">Points Per Game</small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    
+   
 </div>
