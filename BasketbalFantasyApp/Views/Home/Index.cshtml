@@ -138,6 +138,8 @@
                                 <tr>
                                     <th>Tournament / Format</th>
                                     <th class="text-end">Date</th>
+                                    <th>Results</th>
+                                    <th>Admin Only</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -150,6 +152,15 @@
                                         </td>
                                         <td class="text-end text-muted">
                                             @tournament.EventDate.ToString("MMM dd, yyyy")
+                                        </td>
+                                        <td>
+                                        <a asp-controller="TournamentGameplay" asp-action="Summary" asp-route-id="@tournament.TournamentId" class="btn btn-sm btn-outline-primary fw-bold">View</a>
+                                        </td>
+                                        <td>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a asp-controller="Tournaments" asp-action="Delete" asp-route-id="@tournament.TournamentId" class="btn btn-sm btn-outline-danger">Delete</a>
+                                        }
                                         </td>
                                     </tr>
                                 }
