@@ -60,7 +60,7 @@
                         <span class="text-warning text-uppercase small fw-bold tracking-wide">Tournament MVP Award</span>
                     </div>
                     <h2 class="text-warning fw-bold mb-1">@Model.TournamentMvp.FirstName @Model.TournamentMvp.LastName</h2>
-                    <p class="text-muted small mb-3">Representing: @Model.TournamentMvp.NbaTeam</p>
+                    <p class="text-muted small mb-3">Representing: @Model.TournamentMvp.Team</p>
                 </div>
                 <div class="row bg-secondary bg-opacity-25 rounded p-3 text-center g-2">
                     <div class="col-6">
@@ -76,5 +76,42 @@
         </div>
     </div>
 
-   
+    <!-- General Leaderboard Standings -->
+    <div class="row">
+        <div class="col-12">
+            <div class="panel-block">
+                <div class="panel-header"><span>Tournament Standings Leaderboard</span></div>
+                <div class="table-responsive">
+                    <table class="table custom-table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Final Posistion</th>
+                                <th>Managed Team</th>
+                                <th class="text-center">Wins</th>
+                                <th class="text-center">Losses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rank in Model.Standings)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="badge @(rank.FinalPosition == "Champion" ? "bg-warning text-dark" : rank.FinalPosition == "Runner-Up" ? "bg-secondary" : "bg-light text-dark")">
+                                            @rank.FinalPosition
+                                        </span>
+                                    </td>
+                                    <td><strong>@rank.Team?.TeamName</strong></td>
+                                    <td class="text-center text-success fw-bold">@rank.WinsCount</td>
+                                    <td class="text-center text-danger">@rank.LossesCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3 pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-outline-dark px-4">Return to Tournament Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
