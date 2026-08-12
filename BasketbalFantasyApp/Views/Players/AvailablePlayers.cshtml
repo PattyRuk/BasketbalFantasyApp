@@ -39,7 +39,9 @@
                         {
                             <tr>
                                 <td>
-                                    <strong>@player.FirstName @player.LastName</strong>
+                                    <a asp-controller="Players" asp-action="CareerSummary" asp-route-id="@player.Id" class="text-decoration-none text-dark">
+                                        <strong>@player.FirstName @player.LastName</strong>
+                                    </a>
                                     <small class="text-muted d-block">System ID: #@player.Id</small>
                                 </td>
                                 <td><span class="badge bg-secondary">@player.Position</span></td>

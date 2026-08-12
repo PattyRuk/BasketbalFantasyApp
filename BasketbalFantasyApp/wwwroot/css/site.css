@@ -330,3 +330,11 @@ body {
 .uppercase {
     text-transform: uppercase;
 }
+/* ==========================================================================
+   9. ANCHOR HOVER PRESENTATION FIXES
+   ========================================================================== */
+a.text-dark:hover {
+    color: #e67e22 !important;
+    text-decoration: none !important;
+    transition: color 0.15s ease-in-out;
+}
