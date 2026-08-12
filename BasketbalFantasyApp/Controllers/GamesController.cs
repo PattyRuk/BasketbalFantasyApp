@@ -63,6 +63,41 @@ namespace BasketbalFantasyApp.Controllers
                 winner.WinsCount++;
                 loser.LossesCount++;
 
+                // Generate Realistic Stats Per Athlete for the game
+                var activeRosterList = winner.RegisteredPlayers.Concat(loser.RegisteredPlayers).ToList();
+                foreach (var player in activeRosterList)
+                {
+                    _database.PlayerStats.Add(new PlayerStats
+                    {
+                        PlayerId = player.Id,
+                        GameDate = DateTime.Now,
+                        Points = random.Next(8, 38),
+                        Rebounds = random.Next(2, 15),
+                        Assists = random.Next(1, 12),
+                        Steals = random.Next(0, 4),
+                        Blocks = random.Next(0, 5),
+                        Turnovers = random.Next(1, 5),
+                        ThreePointersMade = random.Next(0, 6),
+                        FieldGoalPercentage = Math.Round(random.NextDouble() * (0.65 - 0.35) + 0.35, 3),
+                        FreeThrowPercentage = Math.Round(random.NextDouble() * (0.95 - 0.55) + 0.55, 3)
+                    });
+                }
+
+                if (winner.WinsCount >= tournament.RequiredWins)
+                {
+                    tournament.IsCompleted = true;
+                    tournament.WinnerTeamId = winner.TeamId;
+                    winner.FinalPosition = "Champion";
+                    loser.FinalPosition = "Runner-Up";
+
+                    foreach (var remaining in tournament.TournamentTeams.Where(tt => tt.FinalPosition == "Contender"))
+                    {
+                        remaining.FinalPosition = "Eliminated";
+                    }
+                }
+
+                await _database.SaveChangesAsync();
+            }
 
 
             return RedirectToAction("Summary", "TournamentGameplay", new { id = tournament.TournamentId });
