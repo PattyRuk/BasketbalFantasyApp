@@ -82,6 +82,54 @@ namespace BasketbalFantasyApp.Controllers
             return RedirectToAction("Index", "Tournaments");
         }
 
-        
+        // Tournament Summary Display
+        [AllowAnonymous]
+        public async Task<IActionResult> Summary(int id)
+        {
+            var tournament = await _database.Tournaments
+                .Include(t => t.WinnerTeam)
+                .Include(t => t.MvpPlayer)
+                .Include(t => t.Games)
+                .FirstOrDefaultAsync(t => t.TournamentId == id);
+
+            if (tournament == null || !tournament.IsCompleted) return RedirectToAction("Index", "Tournaments");
+
+            var standings = await _database.TournamentTeams
+                .Include(tt => tt.Team)
+                .Where(tt => tt.TournamentId == id)
+                .OrderByDescending(tt => tt.WinsCount)
+                .ToListAsync();
+
+            var winnerRoster = await _database.TournamentTeams
+                .Include(tt => tt.RegisteredPlayers)
+                .FirstOrDefaultAsync(tt => tt.TournamentId == id && tt.TeamId == tournament.WinnerTeamId);
+
+            int totalMvpPoints = 0;
+            double avgMvpPoints = 0;
+            if (tournament.MvpPlayerId.HasValue)
+            {
+                var mvpStats = await _database.PlayerStats
+                    .Where(ps => ps.PlayerId == tournament.MvpPlayerId.Value && ps.GameDate >= tournament.EventDate)
+                    .ToListAsync();
+                if (mvpStats.Any())
+                {
+                    totalMvpPoints = mvpStats.Sum(s => s.Points);
+                    avgMvpPoints = System.Math.Round(mvpStats.Average(s => s.Points), 1);
+                }
+            }
+
+            var summaryModel = new TournamentSummaryViewModel
+            {
+                TournamentDetails = tournament,
+                Standings = standings,
+                WinnerTeam = tournament.WinnerTeam ?? new Team(),
+                WinnerRoster = winnerRoster?.RegisteredPlayers ?? new List<Player>(),
+                TournamentMvp = tournament.MvpPlayer ?? new Player(),
+                MvpTotalPoints = totalMvpPoints,
+                MvpAveragePoints = avgMvpPoints
+            };
+
+            return View(summaryModel);
+        }
     }
 }
