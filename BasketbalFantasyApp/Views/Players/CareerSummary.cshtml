@@ -1,0 +1,28 @@
+﻿@model BasketbalFantasyApp.Models.PlayerSummaryViewModel
+@{
+    ViewData["Title"] = "Athlete Performance Summary";
+}
+
+<div class="container dashboard-container">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="dashboard-title mb-1">@Model.PlayerBio.FirstName @Model.PlayerBio.LastName</h1>
+            <p class="text-muted">
+                Position: <strong>@Model.PlayerBio.Position</strong> |
+                NBA Team: <strong>@Model.PlayerBio.NbaTeam</strong> |
+                Fantasy Team: <span class="badge bg-dark">@Model.DraftedTeam.TeamName</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Player Stat Highlights -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3"><div class="card metric-card bg-teams text-white"><div class="card-body p-4"><div class="metric-number">@Model.TotalGamesPlayed</div><div class="metric-label">Games Tracked</div></div></div></div>
+        <div class="col-md-3"><div class="card metric-card bg-players text-white"><div class="card-body p-4"><div class="metric-number">@Model.AveragePointsPerGame</div><div class="metric-label">Points PPG</div></div></div></div>
+        <div class="col-md-3"><div class="card metric-card bg-tournaments text-white"><div class="card-body p-4"><div class="metric-number">@Model.AverageRebounds</div><div class="metric-label">Rebounds RPG</div></div></div></div>
+        <div class="col-md-3"><div class="card metric-card bg-dark text-warning"><div class="card-body p-4"><div class="metric-number">@Model.AverageAssists</div><div class="metric-label">Assists APG</div></div></div></div>
+    </div>
+
+   
+</div>
