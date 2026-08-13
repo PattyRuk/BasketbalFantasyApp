@@ -72,11 +72,27 @@ namespace BasketbalFantasyApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var teamRecord = await _database.Teams.FindAsync(id);
-            if (teamRecord != null)
+            if (teamRecord == null) return RedirectToAction(nameof(Index));
+
+            // REMOVE TOURNAMENT REGISTRATIONS TIED TO THIS FRANCHISE ID
+            var tournamentRegistrations = await _database.TournamentTeams.Where(tt => tt.TeamId == id).ToListAsync();
+            if (tournamentRegistrations.Any())
             {
-                _database.Teams.Remove(teamRecord);
-                await _database.SaveChangesAsync();
+                _database.TournamentTeams.RemoveRange(tournamentRegistrations);
             }
+
+            // RELEASE TEAM PLAYERS 
+            var activeRosterPlayers = await _database.Players.Where(p => p.TeamId == id).ToListAsync();
+            foreach (var player in activeRosterPlayers)
+            {
+                player.TeamId = 1; // Return back to Global Player Pool
+                player.OwnerUserId = "SYSTEM_POOL";
+                _database.Update(player);
+            }
+
+            _database.Teams.Remove(teamRecord);
+            await _database.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

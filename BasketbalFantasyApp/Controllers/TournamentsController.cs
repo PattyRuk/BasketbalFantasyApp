@@ -67,5 +67,39 @@ namespace BasketbalFantasyApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var targetTournament = await _database.Tournaments.FindAsync(id);
+            if (targetTournament == null) return RedirectToAction(nameof(Index));
+
+            // REMOVE PLAYER BOX SCORE STATS LINKED TO THIS TOURNAMENT 
+            var linkedStats = await _database.PlayerStats.Where(ps => ps.TournamentId == id).ToListAsync();
+            if (linkedStats.Any())
+            {
+                _database.PlayerStats.RemoveRange(linkedStats);
+            }
+
+            // REMOVE THE INDIVIDUAL GAME SCORE SHEETS FOR THIS TOURNAMENT
+            var linkedGames = await _database.Games.Where(g => g.TournamentId == id).ToListAsync();
+            if (linkedGames.Any())
+            {
+                _database.Games.RemoveRange(linkedGames);
+            }
+
+            // REMOVE TOURNAMENT TEAM REGISTRATIONS
+            var linkedTournamentTeams = await _database.TournamentTeams.Where(tt => tt.TournamentId == id).ToListAsync();
+            if (linkedTournamentTeams.Any())
+            {
+                _database.TournamentTeams.RemoveRange(linkedTournamentTeams);
+            }
+            _database.Tournaments.Remove(targetTournament);
+            await _database.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
