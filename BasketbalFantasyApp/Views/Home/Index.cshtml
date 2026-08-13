@@ -6,7 +6,7 @@
 <div class="container dashboard-container">
     <div class="row">
         <div class="col-12">
-            <h1 class="dashboard-title">The B.F.L Dashboard</h1>
+            <h1 class="dashboard-title">Fantasy Dashboard</h1>
             
             @if (User.Identity != null && User.Identity.IsAuthenticated && Model.HasTeam)
             {
@@ -143,7 +143,10 @@
                                     <th>Tournament / Format</th>
                                     <th class="text-end">Date</th>
                                     <th>Results</th>
-                                    <th>Admin Only</th>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <th>Admin</th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
