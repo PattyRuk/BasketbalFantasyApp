@@ -11,7 +11,7 @@ namespace BasketbalFantasyApp.Models
         public int Id { get; set; }
 
         // Foreign Key pointing back to the specific player, tournament, game
-        public int? PlayerId { get; set; }
+        public int PlayerId { get; set; }
         public int? TournamentId { get; set; }
         public int? GameId { get; set; }
         public DateTime GameDate { get; set; }
