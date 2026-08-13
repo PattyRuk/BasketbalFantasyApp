@@ -75,7 +75,17 @@ namespace BasketbalFantasyApp.Controllers
             if (teamRecord == null) return RedirectToAction(nameof(Index));
 
             // REMOVE TOURNAMENT REGISTRATIONS TIED TO THIS FRANCHISE ID
-            var tournamentRegistrations = await _database.TournamentTeams.Where(tt => tt.TeamId == id).ToListAsync();
+            var tournamentRegistrations = await _database.TournamentTeams
+                .Include(tt => tt.RegisteredPlayers)
+                .Where(tt => tt.TeamId == id)
+                .ToListAsync();
+
+            foreach (var tr in tournamentRegistrations)
+            {
+                tr.RegisteredPlayers.Clear();
+            }
+            await _database.SaveChangesAsync();
+
             if (tournamentRegistrations.Any())
             {
                 _database.TournamentTeams.RemoveRange(tournamentRegistrations);

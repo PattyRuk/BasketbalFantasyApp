@@ -91,7 +91,16 @@ namespace BasketbalFantasyApp.Controllers
             }
 
             // REMOVE TOURNAMENT TEAM REGISTRATIONS
-            var linkedTournamentTeams = await _database.TournamentTeams.Where(tt => tt.TournamentId == id).ToListAsync();
+            var linkedTournamentTeams = await _database.TournamentTeams
+                   .Include(tt => tt.RegisteredPlayers)
+                   .Where(tt => tt.TournamentId == id)
+                   .ToListAsync();
+            foreach (var tt in linkedTournamentTeams)
+            {
+                tt.RegisteredPlayers.Clear(); // Clear the collection to break the shadow foreign key pointer constraints on the Players table
+            }
+            await _database.SaveChangesAsync();
+
             if (linkedTournamentTeams.Any())
             {
                 _database.TournamentTeams.RemoveRange(linkedTournamentTeams);
