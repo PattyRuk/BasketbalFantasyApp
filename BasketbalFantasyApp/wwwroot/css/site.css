@@ -22,82 +22,108 @@ body {
 }*/
 
 /* ==========================================================================
+   0. DESIGN SYSTEM & ROOT VARIABLES
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --panel-bg: #ffffff;
+    /* Branding Sports Palette Golems */
+    --accent-orange: #f97316;
+    --accent-orange-hover: #ea580c;
+    --navy-dark: #1e293b;
+    --success-green: #10b981;
+    --danger-red: #ef4444;
+}
+
+/* ==========================================================================
    1. GLOBAL PAGE LAYOUT
    ========================================================================== */
 body {
-    background-color: #f4f6f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333333;
+    background-color: var(--bg-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
 }
 
 .dashboard-container {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
 }
 
 .dashboard-title {
-    font-weight: 700;
-    color: #1a252f;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
 }
 
 /* ==========================================================================
    2. METRIC HIGHLIGHT CARDS (STATS GRID)
    ========================================================================== */
 .metric-card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
     .metric-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
     }
 
 .bg-teams {
-    background: linear-gradient(135deg, #2c3e50, #34495e);
+    background: linear-gradient(135deg, #0f172a, #1e293b);
 }
 
 .bg-players {
-    background: linear-gradient(135deg, #e67e22, #d35400);
+    background: linear-gradient(135deg, #f97316, #c2410c);
 }
 
 .bg-tournaments {
-    background: linear-gradient(135deg, #27ae60, #219653);
+    background: linear-gradient(135deg, #059669, #065f46);
 }
 
 .metric-number {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: 2.75rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
     line-height: 1;
+    margin-bottom: 0.25rem;
 }
 
 .metric-label {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.9;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
 }
 
 /* ==========================================================================
    3. DATA LISTS AND PANEL BLOCKS
    ========================================================================== */
 .panel-block {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
     height: 100%;
 }
 
 .panel-header {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #2c3e50;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 0.75rem;
-    margin-bottom: 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 /* ==========================================================================
@@ -108,27 +134,35 @@ body {
 }
 
     .custom-table th {
-        background-color: #f8f9fa;
-        color: #7f8c8d;
-        font-weight: 600;
+        background-color: #f8fafc;
+        color: var(--text-secondary);
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: 0.8rem;
-        border-top: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--border-color);
+        padding: 0.75rem 1rem;
     }
 
     .custom-table td {
         vertical-align: middle;
         font-size: 0.95rem;
+        padding: 1rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .custom-table tbody tr:last-child td {
+        border-bottom: none;
     }
 
 /* ==========================================================================
    5. ALERTS AND ALIGNED HOOKS
    ========================================================================== */
 .empty-notice {
-    padding: 2rem;
+    padding: 3rem 2rem;
     background-color: #fafbfc;
-    border: 2px dashed #e2e8f0;
-    border-radius: 8px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
 }
 
 /* ==========================================================================
@@ -143,58 +177,59 @@ body {
 }
 
 .security-card {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    padding: 2.5rem;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+    padding: 3rem;
     width: 100%;
     max-width: 480px;
 }
 
 .security-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.25rem;
 }
 
 .security-title {
-    font-weight: 700;
-    color: #1a252f;
-    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    font-size: 1.85rem;
     margin-bottom: 0.5rem;
 }
 
 .security-subtitle {
-    color: #7f8c8d;
+    color: var(--text-secondary);
     font-size: 0.95rem;
 }
 
 .form-floating-custom {
     position: relative;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
     .form-floating-custom .form-control {
-        border: 1px solid #dcdde1;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: 0.85rem 1.15rem;
         height: auto;
         font-size: 1rem;
-        transition: border-color 0.2s ease;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
         .form-floating-custom .form-control:focus {
-            border-color: #e67e22;
-            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
             outline: none;
         }
 
 .btn-security {
-    background-color: #e67e22;
+    background-color: var(--accent-orange);
     color: #ffffff;
     border: none;
-    border-radius: 8px;
-    padding: 0.75rem;
+    border-radius: 10px;
+    padding: 0.85rem;
     font-weight: 600;
     font-size: 1rem;
     width: 100%;
@@ -202,22 +237,23 @@ body {
 }
 
     .btn-security:hover {
-        background-color: #d35400;
+        background-color: var(--accent-orange-hover);
         color: #ffffff;
     }
 
 .security-footer {
     text-align: center;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid #f1f2f6;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
     .security-footer a {
-        color: #e67e22;
+        color: var(--accent-orange);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
     }
 
         .security-footer a:hover {
@@ -231,12 +267,13 @@ body {
 }
 
 .validation-summary-custom li {
-    color: #c0392b;
+    color: #b91c1c;
     font-size: 0.9rem;
-    background-color: #fde8e7;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
+    background-color: #fef2f2;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
     margin-bottom: 0.5rem;
+    border-left: 4px solid var(--danger-red);
 }
 
 .metric-link {
@@ -248,93 +285,102 @@ body {
    7. FORM MANAGERS AND CRUD CONTROL GRIDS
    ========================================================================== */
 .crud-wrapper {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
     margin-top: 1.5rem;
 }
 
 .form-group-custom {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-label-custom {
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.6rem;
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .form-input-custom {
-    border: 1px solid #dcdde1;
-    border-radius: 6px;
-    padding: 0.6rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.7rem 1.15rem;
     width: 100%;
-    transition: border-color 0.2s ease;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
     .form-input-custom:focus {
-        border-color: #e67e22;
+        border-color: var(--accent-orange);
         outline: none;
-        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
     }
 
 .button-action-grid {
     display: flex;
     gap: 0.75rem;
-    margin-top: 2rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid #ecf0f1;
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
 }
 
 .danger-display-panel {
-    background-color: #fdf2f2;
-    border-left: 4px solid #dc3545;
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
+    background-color: #fef2f2;
+    border-left: 4px solid var(--danger-red);
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 1.75rem;
 }
 
 /* ==========================================================================
    8. TOURNAMENT SIMULATION ENGINE AND PRESENTATION RETROSPECTIVES
    ========================================================================== */
 .letter-spacing-1 {
-    letter-spacing: 1.5px;
+    letter-spacing: 0.08em;
 }
 
 .tracking-wide {
-    letter-spacing: 2px;
+    letter-spacing: 0.1em;
 }
 
 .bg-warning.text-dark {
-    background: linear-gradient(135deg, #f1c40f, #f39c12) !important;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
     border: none !important;
+    color: #0f172a !important;
+    border-radius: 12px;
 }
 
 .panel-block.bg-dark {
-    background: linear-gradient(135deg, #1e272e, #2d3436) !important;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+    border: none !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
 }
 
 .border-secondary {
-    border-color: #485460 !important;
+    border-color: #334155 !important;
 }
 
 .bg-secondary.bg-opacity-25 {
-    background-color: rgba(72, 84, 96, 0.25) !important;
+    background-color: rgba(100, 116, 139, 0.2) !important;
 }
 
 .uppercase {
     text-transform: uppercase;
 }
+
 /* ==========================================================================
    9. ANCHOR HOVER PRESENTATION FIXES
    ========================================================================== */
-a.text-dark:hover {
-    color: #e67e22 !important;
-    text-decoration: none !important;
+a.text-dark {
     transition: color 0.15s ease-in-out;
 }
+
+    a.text-dark:hover {
+        color: var(--accent-orange) !important;
+        text-decoration: none !important;
+    }
