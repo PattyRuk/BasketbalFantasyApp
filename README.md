@@ -17,7 +17,6 @@ The application automatically provisions two localized testing accounts upon ini
 
 ## Functional Verification Test Loop
 
-To prove all architectural relationships and dynamic stats trackers are fully active across your clean slate, execute this quick workflow live:
 1. **Verify Market Size:** Load the home dashboard anonymously and confirm the **Available Free Agents** metric card tracks exactly **90** elite 2026 NBA starters.
 2. **Draft a Franchise Roster:** Log in as the Team Manager. Create a new custom franchise team, go to the available players grid page, choose an athlete (e.g., *Jayson Tatum*), and click **Sign Athlete**. Confirm that the dashboard pool count instantly drops to **89**.
 3. **Schedule a Bracket:** Log out, log in as the League Administrator, click **Tournament Brackets** > **Schedule New Bracket**, and create an open competition ruleset.
