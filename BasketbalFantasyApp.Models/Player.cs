@@ -15,12 +15,12 @@ namespace BasketbalFantasyApp.Models
         public string? Position { get; set; }
         public string? NbaTeam { get; set; }
 
-        // One-to-One - unique Account ID of the user managing this player's fantasy rights
+        // ID of the user managing this player's fantasy rights
         public string? OwnerUserId { get; set; }
 
-        // Foreign Key linking this player to their current fantasy league team
+        // links player to their current fantasy league team
         public int TeamId { get; set; }
-        public Team Team { get; set; }
+        public Team? Team { get; set; }
 
         // box score statistics logs
         public ICollection<PlayerStats> Stats { get; set; } = new List<PlayerStats>();

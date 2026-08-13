@@ -23,7 +23,7 @@ namespace BasketbalFantasyApp.Models
         public int? MvpPlayerId { get; set; }
         public Player? MvpPlayer { get; set; }
 
-        // Navigation property:  Many-to-Many connection
+        // Navigation:  Many-to-Many connection
         public List<TournamentPlayer> TournamentPlayers { get; set; } = new List<TournamentPlayer>();
         public List<TournamentTeam> TournamentTeams { get; set; } = new List<TournamentTeam>();
         public List<Game> Games { get; set; } = new List<Game>();

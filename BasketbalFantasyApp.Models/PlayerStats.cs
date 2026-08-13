@@ -10,9 +10,10 @@ namespace BasketbalFantasyApp.Models
     {
         public int Id { get; set; }
 
-        // Foreign Key pointing back to the specific player profile
-        public int PlayerId { get; set; }
+        // Foreign Key pointing back to the specific player, tournament, game
+        public int? PlayerId { get; set; }
         public int? TournamentId { get; set; }
+        public int? GameId { get; set; }
         public DateTime GameDate { get; set; }
 
         // Traditional Basketball Statistical Categories
@@ -29,5 +30,7 @@ namespace BasketbalFantasyApp.Models
         // Navigation property
         public Player? Player { get; set; }
         public Tournament? Tournament { get; set; }
+        public Game? Game { get; set; }
+
     }
 }

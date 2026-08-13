@@ -94,6 +94,12 @@ namespace BasketbalFantasyApp.DAL
                 .WithMany()
                 .HasForeignKey(g => g.TeamBId)
                 .OnDelete(DeleteBehavior.Restrict);
+            // 7. PlayerStats - one-to-many connection
+            modelBuilder.Entity<PlayerStats>()
+                .HasOne(ps => ps.Game)
+                .WithMany()
+                .HasForeignKey(ps => ps.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

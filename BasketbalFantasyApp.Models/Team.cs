@@ -15,7 +15,7 @@ namespace BasketbalFantasyApp.Models
         // One-to-One - unique Account ID of the user managing the team 
         public string? OwnerUserId { get; set; }
 
-        // Navigation property: One team has a roster filled with multiple players
+        // Navigation - One team has a roster filled with multiple players
         public List<Player> Players { get; set; } = new List<Player>();
     }
 }
