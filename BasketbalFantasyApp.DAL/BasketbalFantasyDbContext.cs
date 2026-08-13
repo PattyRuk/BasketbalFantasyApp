@@ -100,6 +100,14 @@ namespace BasketbalFantasyApp.DAL
                 .WithMany()
                 .HasForeignKey(ps => ps.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
+            // 8. TournamentTeam
+            modelBuilder.Entity<TournamentTeam>()
+                .HasMany(tt => tt.RegisteredPlayers)
+                .WithMany()
+                .UsingEntity<Dictionary<string, object>>(
+                    "TournamentTeamRosterJunction",
+                    j => j.HasOne<Player>().WithMany().HasForeignKey("PlayerId").OnDelete(DeleteBehavior.Cascade),
+                    j => j.HasOne<TournamentTeam>().WithMany().HasForeignKey("TournamentId", "TeamId").OnDelete(DeleteBehavior.Restrict));
         }
     }
 }

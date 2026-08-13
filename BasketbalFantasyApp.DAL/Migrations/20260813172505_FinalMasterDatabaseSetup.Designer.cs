@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketbalFantasyApp.DAL.Migrations
 {
     [DbContext(typeof(BasketbalFantasyDbContext))]
-    [Migration("20260812054014_IntegrateTournamentGamesSimulation")]
-    partial class IntegrateTournamentGamesSimulation
+    [Migration("20260813172505_FinalMasterDatabaseSetup")]
+    partial class FinalMasterDatabaseSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,17 +97,9 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TournamentTeamTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TournamentTeamTournamentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TeamId");
-
-                    b.HasIndex("TournamentTeamTournamentId", "TournamentTeamTeamId");
 
                     b.ToTable("Players");
                 });
@@ -135,6 +127,9 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Property<DateTime>("GameDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
@@ -150,12 +145,19 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Property<int>("ThreePointersMade")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TournamentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Turnovers")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GameId");
+
                     b.HasIndex("PlayerId");
+
+                    b.HasIndex("TournamentId");
 
                     b.ToTable("PlayerStats");
                 });
@@ -476,6 +478,24 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TournamentTeamRosterJunction", b =>
+                {
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerId", "TournamentId", "TeamId");
+
+                    b.HasIndex("TournamentId", "TeamId");
+
+                    b.ToTable("TournamentTeamRosterJunction");
+                });
+
             modelBuilder.Entity("BasketbalFantasyApp.Models.Game", b =>
                 {
                     b.HasOne("BasketbalFantasyApp.Models.Team", "TeamA")
@@ -511,22 +531,31 @@ namespace BasketbalFantasyApp.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BasketbalFantasyApp.Models.TournamentTeam", null)
-                        .WithMany("RegisteredPlayers")
-                        .HasForeignKey("TournamentTeamTournamentId", "TournamentTeamTeamId");
-
                     b.Navigation("Team");
                 });
 
             modelBuilder.Entity("BasketbalFantasyApp.Models.PlayerStats", b =>
                 {
+                    b.HasOne("BasketbalFantasyApp.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("BasketbalFantasyApp.Models.Player", "Player")
                         .WithMany("Stats")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BasketbalFantasyApp.Models.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId");
+
+                    b.Navigation("Game");
+
                     b.Navigation("Player");
+
+                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("BasketbalFantasyApp.Models.Tournament", b =>
@@ -633,6 +662,21 @@ namespace BasketbalFantasyApp.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TournamentTeamRosterJunction", b =>
+                {
+                    b.HasOne("BasketbalFantasyApp.Models.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BasketbalFantasyApp.Models.TournamentTeam", null)
+                        .WithMany()
+                        .HasForeignKey("TournamentId", "TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BasketbalFantasyApp.Models.Player", b =>
                 {
                     b.Navigation("Stats");
@@ -652,11 +696,6 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Navigation("TournamentPlayers");
 
                     b.Navigation("TournamentTeams");
-                });
-
-            modelBuilder.Entity("BasketbalFantasyApp.Models.TournamentTeam", b =>
-                {
-                    b.Navigation("RegisteredPlayers");
                 });
 #pragma warning restore 612, 618
         }

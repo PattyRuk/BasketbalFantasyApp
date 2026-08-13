@@ -94,17 +94,9 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TournamentTeamTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TournamentTeamTournamentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TeamId");
-
-                    b.HasIndex("TournamentTeamTournamentId", "TournamentTeamTeamId");
 
                     b.ToTable("Players");
                 });
@@ -483,6 +475,24 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TournamentTeamRosterJunction", b =>
+                {
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerId", "TournamentId", "TeamId");
+
+                    b.HasIndex("TournamentId", "TeamId");
+
+                    b.ToTable("TournamentTeamRosterJunction");
+                });
+
             modelBuilder.Entity("BasketbalFantasyApp.Models.Game", b =>
                 {
                     b.HasOne("BasketbalFantasyApp.Models.Team", "TeamA")
@@ -517,10 +527,6 @@ namespace BasketbalFantasyApp.DAL.Migrations
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BasketbalFantasyApp.Models.TournamentTeam", null)
-                        .WithMany("RegisteredPlayers")
-                        .HasForeignKey("TournamentTeamTournamentId", "TournamentTeamTeamId");
 
                     b.Navigation("Team");
                 });
@@ -653,6 +659,21 @@ namespace BasketbalFantasyApp.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TournamentTeamRosterJunction", b =>
+                {
+                    b.HasOne("BasketbalFantasyApp.Models.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BasketbalFantasyApp.Models.TournamentTeam", null)
+                        .WithMany()
+                        .HasForeignKey("TournamentId", "TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BasketbalFantasyApp.Models.Player", b =>
                 {
                     b.Navigation("Stats");
@@ -672,11 +693,6 @@ namespace BasketbalFantasyApp.DAL.Migrations
                     b.Navigation("TournamentPlayers");
 
                     b.Navigation("TournamentTeams");
-                });
-
-            modelBuilder.Entity("BasketbalFantasyApp.Models.TournamentTeam", b =>
-                {
-                    b.Navigation("RegisteredPlayers");
                 });
 #pragma warning restore 612, 618
         }
