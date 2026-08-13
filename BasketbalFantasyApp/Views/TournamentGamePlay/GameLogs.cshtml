@@ -63,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                     @* Filters stats to show only players drafted to Team A who logged points on this exact date timestamp *@
-                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamAId && s.GameDate.Date == game.MatchTimestamp.Date))
+                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamAId && s.GameId == game.GameId))
                                     {
                                         <tr>
                                             <td>
@@ -97,7 +97,7 @@
                                 </thead>
                                 <tbody>
                                     @* Filters stats to show only players drafted to Team B who logged points on this exact date timestamp/tournament *@
-                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamBId && s.GameDate.Date == game.MatchTimestamp.Date))
+                                    @foreach (var stat in Model.TournamentPlayerBoxScores.Where(s => s.Player?.TeamId == game.TeamBId && s.GameId == game.GameId))
                                     {
                                         <tr>
                                             <td>
