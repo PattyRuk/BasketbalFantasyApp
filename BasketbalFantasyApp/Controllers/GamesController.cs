@@ -70,6 +70,8 @@ namespace BasketbalFantasyApp.Controllers
                     _database.PlayerStats.Add(new PlayerStats
                     {
                         PlayerId = player.Id,
+                        TournamentId = tournament.TournamentId,
+                        GameId = matchLog.GameId, 
                         GameDate = DateTime.Now,
                         Points = random.Next(8, 38),
                         Rebounds = random.Next(2, 15),
