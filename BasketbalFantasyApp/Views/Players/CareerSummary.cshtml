@@ -52,7 +52,7 @@
                                 <td><strong class="text-primary">@historicalBracket.TournamentName</strong></td>
                                 <td class="text-center fw-bold">@historicalBracket.GamesPlayed</td>
                                 <td class="text-center text-success">@historicalBracket.PointsScored pts</td>
-                                <td class="text-center text-muted">@(historicalBracket.FieldGoalPercentage * 100)%</td>
+                                <td class="text-center text-muted">@((historicalBracket.FieldGoalPercentage * 100).ToString("0.0"))%</td>
                             </tr>
                         }
                     </tbody>

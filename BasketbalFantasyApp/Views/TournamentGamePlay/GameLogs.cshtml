@@ -107,7 +107,7 @@
                                             <td class="text-center fw-bold text-primary">@stat.Points</td>
                                             <td class="text-center text-muted">@stat.Rebounds</td>
                                             <td class="text-center text-muted">@stat.Assists</td>
-                                            <td class="text-center text-muted small">@(stat.FieldGoalPercentage * 100)%</td>
+                                            <td class="text-center text-muted small">@((stat.FieldGoalPercentage * 100).ToString("0.0"))%</td>
                                         </tr>
                                     }
                                 </tbody>

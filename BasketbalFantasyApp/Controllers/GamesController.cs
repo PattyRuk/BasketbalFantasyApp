@@ -58,7 +58,12 @@ namespace BasketbalFantasyApp.Controllers
                 var loser = scoreA > scoreB ? teamB : teamA;
 
                 matchLog.WinnerTeamId = winner.TeamId;
+
+                // 1. STAGE THE GAME LOG DATA IN OVERSIGHT TRACKER
                 _database.Games.Add(matchLog);
+
+                // 2. FORCE GENERATION OF REAL GAMEID KEY BY COMMITTING TO DISK IMMEDIATELY
+                await _database.SaveChangesAsync();
 
                 winner.WinsCount++;
                 loser.LossesCount++;
@@ -70,8 +75,9 @@ namespace BasketbalFantasyApp.Controllers
                     _database.PlayerStats.Add(new PlayerStats
                     {
                         PlayerId = player.Id,
+                        Player = player,
                         TournamentId = tournament.TournamentId,
-                        GameId = matchLog.GameId, 
+                        GameId = matchLog.GameId, // <-- NOW RESOLVES TO A REAL COMPUTE NUMBER (e.g. 1, 2, 3...)
                         GameDate = DateTime.Now,
                         Points = random.Next(8, 38),
                         Rebounds = random.Next(2, 15),
@@ -98,6 +104,7 @@ namespace BasketbalFantasyApp.Controllers
                     }
                 }
 
+                // 3. COMMIT PLAYER BOX SCORES AND STATUS UPDATES ACCURATELY HERE
                 await _database.SaveChangesAsync();
             }
 
